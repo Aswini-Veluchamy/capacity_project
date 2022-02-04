@@ -60,8 +60,8 @@ input[type="text"] {
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                               <label for="move_group_name" class="form-label">Remarks/Move Group Name</label>
-                                <input type="text" id="move_group_name" class="form-control" name="move_group_name" value="{{data.move_group_name}}" readonly />
+                                <label for="user_id" class="form-label">User ID</label>
+                                <input type="text" class="form-control" id="user_id" name="user_id" value="{{data.user_id}}" readonly>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
@@ -96,6 +96,16 @@ input[type="text"] {
                             <div class="mb-3 col-md-6">
                                 <label for="gravit" class="form-label">Gravit (TB)</label>
                                 <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="{{data.gravit|floatformat}}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="move_group_name" class="form-label">Move Group Name</label>
+                                <input type="text" class="form-control" id="move_group_name" name="move_group_name" min="0" max="500" value="{{data.move_group_name}}" readonly>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="remarks" class="form-label">Remarks</label>
+                                <textarea id="remarks" maxlength="50" rows="4" cols="50" class="form-control" name="remarks">{{data.remarks}}</textarea>
                             </div>
                         </div>
                         <br>

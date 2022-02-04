@@ -83,10 +83,7 @@ def create_request(request):
 
 @csrf_exempt
 def view_request(request):
-
     data = CapacityData.objects.all()
-    print(data)
-
     return render(request, 'capacity_app/view_request.html', {'data': data})
 
 
