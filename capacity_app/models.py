@@ -18,3 +18,8 @@ class CapacityData(models.Model):
     remarks = models.CharField(max_length=256)
     tkt_status = models.CharField(max_length=16)
 
+    def __str__(self):
+        return self.topic
+
+    class Meta:
+        db_table = "capacity_data"
