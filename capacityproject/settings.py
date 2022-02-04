@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'capacityproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capacity_db',
+        'NAME': 'capacity_datadb',
         'USER': 'root',
         'PASSWORD': 'root123',
         'HOST': 'localhost',

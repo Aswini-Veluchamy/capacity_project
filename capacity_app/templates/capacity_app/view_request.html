@@ -18,6 +18,12 @@
 .bootstrap-table .fixed-table-toolbar .columns-right {
     float: right;
 }
+.bootstrap-table .fixed-table-pagination > .pagination {
+    float:right;
+}
+td {
+    white-space: nowrap;
+}
 </style>
 <body>
 <div class="pagetitle">
@@ -72,8 +78,7 @@
                     <th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Move Group Name</th>
                     <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
                     <th nowrap class="status" data-field="status" data-sortable="true" data-formatter="priceFormatter" >Status</th>
-                    <th data-sortable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </th>
+                    <th data-sortable="true">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
