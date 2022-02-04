@@ -71,16 +71,15 @@
                     <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Today Date</th>
                     <th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Move Group Name</th>
                     <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
-                    <th nowrap class="status" data-field="status" data-sortable="true" >Status</th>
+                    <th nowrap class="status" data-field="status" data-sortable="true" data-formatter="priceFormatter" >Status</th>
                     <th data-sortable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for i in data %}
                 <tr>
-                    <td nowrap class="id">{{i.request_id}}</td>
+                    <td nowrap class="request_id"><a href={% url 'history_request' id=i.request_id %} style="text-decoration:underline;">{{i.request_id}}</a></td>
                     <td nowrap class="dc">{{i.data_center}}</td>
                     <td nowrap class="project_name">{{i.project_name}}</td>
                     <td nowrap class="user_id">{{i.user_id}}</td>
@@ -96,8 +95,8 @@
                     <td nowrap class="remarks">{{i.remarks}}</td>
                     <td nowrap class="status">{{i.tkt_status}}</td>
                     <td>
-                        &nbsp;&nbsp;<button class="btn btn-primary"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-edit"></i> Edit</a></button>&nbsp;&nbsp;
-                        <button class="btn btn-danger"><a style="text-decoration:none;color:#fff;" href="#"><i class="fas fa-trash"></i> Delete</a></button>
+                        <button type="button" class="btn btn-info"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-edit"></i></a></button>
+                        <button type="button" class="btn btn-info"><i class="fa fa-trash-alt" style="color:white;"></i></button>
                     </td>
                     {% endfor %}
                 </tr>
@@ -123,7 +122,16 @@
 
 <!-- Core plugin JavaScript-->
 <script src=" {% static 'capacity_app/table_extensions/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
+<script>
+  function priceFormatter(value, row) {
+  var icon = row.status === 'ACTIVE' ? 'btn-success btn-sm' :
+  row.status === 'Pending' | row.status === 'PENDING' | row.status === 'pending' ? 'btn-warning btn-sm' :
+  row.status === 'Work IN Progress' | row.status === 'work in progress' | row.status === 'WORK IN PROGRESS' ? 'btn-info btn-sm' :
+  row.status === 'Completed' | row.status === 'COMPLETED' | row.status === 'completed' ?'btn-success btn-sm' :
+  'btn-primary btn-sm'
+  return '<button class="font btn ' + icon + '">' + value + '</button>'
+  }
+</script>
 <script>
     $('#example').bootstrapTable({
     exportOptions: {
@@ -131,6 +139,7 @@
     }
 });
 </script>
+
 
 
 {% endblock content %}

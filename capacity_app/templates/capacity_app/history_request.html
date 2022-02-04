@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     {% block content %}
-    <title>Completed Request</title>
+    <title>History Request</title>
 
     <link href="{% static 'capacity_app/table_extensions/fontawesome-free-5.15.1/css/all.css' %}" rel="stylesheet">
     <link href="{% static 'capacity_app/table_extensions/fontawesome-free-5.15.1/css/all.min.css' %}" rel="stylesheet">
@@ -21,12 +21,12 @@
 </style>
 <body>
 <div class="pagetitle">
-    <h1>Completed Request</h1>
+    <h1>History Request</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             <li class="breadcrumb-item">Request</li>
-            <li class="breadcrumb-item">Completed Request</li>
+            <li class="breadcrumb-item">History Request</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -120,7 +120,7 @@
 <script>
     $('#example').bootstrapTable({
     exportOptions: {
-        fileName: 'Completed Request'
+        fileName: 'History Request'
     }
 });
 </script>

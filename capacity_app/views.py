@@ -97,3 +97,12 @@ def update_request(request, pk):
 @csrf_exempt
 def completed_request(request):
     return render(request, 'capacity_app/completed_request.html')
+
+@csrf_exempt
+def history_request(request, pk):
+    data = CapacityData.objects.filter(request_id=id)
+    # return HttpResponse("Welcome")
+    print(id)
+    pass
+
+    return render(request, 'capacity_app/history_request.html', {"data": data})
