@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% extends "capacity_app/base.html" %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+    <!-- Favicons -->
+    <link href="{% static 'capacity_app/assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'capacity_app/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    {% block content %}
+    <title>Update Request</title>
+    <style>
+form {
+    font-size:14px;
+}
+.form-select {
+    font-size:14px;
+    height: 40px;
+}
+input[type="number"] {
+    font-size:14px;
+    height: 40px;
+}
+input[type="text"] {
+    font-size:14px;
+    height: 40px;
+}
+</style>
+<body>
+<div class="pagetitle">
+    <h1>Update Request</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Request - Alpha4</li>
+            <li class="breadcrumb-item">Update Request</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="dc" class="form-label">Select DC</label>
+                                <input type="text" id="dc" class="form-control" name="dc" value="{{data.data_center}}" readonly />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="project" class="form-label">Select Project</label>
+                                <input type="text" id="project" class="form-control" name="project" value="{{data.project_name}}" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                               <label for="move_group_name" class="form-label">Remarks/Move Group Name</label>
+                                <input type="text" id="move_group_name" class="form-control" name="move_group_name" value="{{data.move_group_name}}" readonly />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
+                                <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="{{data.std_stable_1|floatformat}}"  required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
+                                <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="{{data.std_stable_2|floatformat}}" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
+                                <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="{{data.std_arbor|floatformat}}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="stable1" class="form-label">Stable1 (TB)</label>
+                                <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="{{data.stable_1|floatformat}}" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="stable2" class="form-label">Stable2 (TB)</label>
+                                <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="{{data.stable_2|floatformat}}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="arbor" class="form-label">Arbor (TB)</label>
+                                <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="{{data.arbor|floatformat}}" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="gravit" class="form-label">Gravit (TB)</label>
+                                <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="{{data.gravit|floatformat}}" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                             <p>{{error}}</p>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{% url 'dashboard' %} " class="btn btn-primary" role="button">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery2.1.min.js' %}"></script>
+
+<script>
+    jQuery(function ($) {
+    var $inputs = $('input[name=gravit],input[name=arbor],input[name=std_arbor],input[name=stable1],input[name=stable2],input[name=std_stable1],input[name=std_stable2]');
+    $inputs.on('input', function () {
+        // Set the required property of the other input to false if this input is not empty.
+        $inputs.not(this).prop('required', !$(this).val().length);
+    });
+});
+</script>
+</body>
+{% endblock content %}
+</head>
+</html>

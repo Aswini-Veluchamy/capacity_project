@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+{% extends "capacity_app/base.html" %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicons -->
+    <link href="{% static 'capacity_app/assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'capacity_app/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    {% block content %}
+    <title>Create Request</title>
+    <style>
+form {
+    font-size:14px;
+}
+.form-select {
+    font-size:14px;
+    height: 40px;
+}
+input[type="number"] {
+    font-size:14px;
+    height: 40px;
+}
+input[type="text"] {
+    font-size:14px;
+    height: 40px;
+}
+</style>
+<body>
+<div class="pagetitle">
+    <h1>Create Request</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Request - Alpha4</li>
+            <li class="breadcrumb-item">Create Request</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="dc" class="form-label">Select DC</label>
+                                <select id="dc" class="form-select" name="dc" required>
+                                    <option value="" selected="selected" disabled="disabled">Select DC</option>
+                                    <option value="Ash">Ash</option>
+                                    <option value="Fpk">Fpk</option>
+                                </select>
+
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="project" class="form-label">Select Project</label>
+                                <select id="project" class="form-select" name="project" required>
+                                    <option value="" selected="selected" disabled="disabled">Select Project</option>
+                                    <option value="DUPONT">DUPONT</option>
+                                    <option value="CORDIS">CORDIS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="user_id" class="form-label">User ID</label>
+                                <input type="text" class="form-control" id="user_id" name="user_id" value="{{request.user.username}}" readonly>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
+                                <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="0" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
+                                <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
+                                <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="0" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="stable1" class="form-label">Stable1 (TB)</label>
+                                <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="stable2" class="form-label">Stable2 (TB)</label>
+                                <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="0" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="arbor" class="form-label">Arbor (TB)</label>
+                                <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="gravit" class="form-label">Gravit (TB)</label>
+                                <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="0" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="move_group_name" class="form-label">Remarks/Move Group Name</label>
+                                <select id="move_group_name" class="form-select" name="move_group_name" required>
+                                    <option value="" selected="selected" disabled="disabled">Remarks/Move Group Name</option>
+                                    <option value="MoveGroup 1">MoveGroup 1</option>
+                                    <option value="MoveGroup 2">MoveGroup 2</option>
+                                    <option value="MoveGroup 3">MoveGroup 3</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="remarks" class="form-label">Remarks/Move Group Name</label>
+                                <textarea id="remarks" maxlength="50" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <p>{{error}}</p>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{% url 'dashboard' %} " class="btn btn-primary" role="button">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+
+<script>
+    jQuery(function ($) {
+    var $inputs = $('input[name=gravit],input[name=arbor],input[name=std_arbor],input[name=stable1],input[name=stable2],input[name=std_stable1],input[name=std_stable2]');
+    $inputs.on('input', function () {
+        // Set the required property of the other input to false if this input is not empty.
+        $inputs.not(this).prop('required', !$(this).val().length);
+    });
+});
+</script>
+
+</body>
+{% endblock content %}
+</head>
+</html>

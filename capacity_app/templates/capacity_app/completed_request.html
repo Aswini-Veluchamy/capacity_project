@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% extends "capacity_app/base.html" %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block content %}
+    <title>Completed Request</title>
+    
+    <link href="{% static 'capacity_app/table_extensions/fontawesome-free-5.15.1/css/all.css' %}" rel="stylesheet">
+    <link href="{% static 'capacity_app/table_extensions/fontawesome-free-5.15.1/css/all.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'capacity_app/table_extensions/assets/bootstrap-table.min.css' %}" rel="stylesheet">
+    <link href="{% static 'capacity_app/table_extensions/assets/bootstrap-table.css' %}" rel="stylesheet">
+    <link href="{% static 'capacity_app/table_extensions/assets/extensions/filter-control/bootstrap-table-filter-control.css' %}" rel="stylesheet">
+    <link href="{% static 'capacity_app/table_extensions/assets/extensions/filter-control/bootstrap-table-filter-control.min.css' %}" rel="stylesheet">
+<style>
+.bootstrap-table .fixed-table-toolbar .columns-right {
+    float: right;
+}
+</style>
+<body>
+<div class="pagetitle">
+    <h1>View Request</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Request - Alpha4</li>
+            <li class="breadcrumb-item">Completed Request</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+    <div class="row">
+
+        <font size="2" face = "futura,helvetica">
+        <table class="table table-bordered table-striped" id="example"
+               data-toggle="table"
+               data-pagination="true"
+               data-search="true"
+               data-show-columns="true"
+               data-show-toggle="true"
+               data-show-columns-toggle-all="false"
+               data-show-export="true"
+               data-export-data-type="all"
+               data-response-handler="responseHandler"
+               data-show-fullscreen="true"
+               data-show-pagination-switch="true"
+               data-height="600"
+               data-pagination-pre-text="Previous"
+               data-pagination-next-text="Next"
+               data-pagination-h-align="left"
+               data-pagination-detail-h-align="right"
+               data-page-size="20"
+               data-page-list="[20, 30, 40, 50, All]"
+               data-buttons-class="primary">
+            <thead>
+            <tr>
+                <th data-sortable="true">ID</th>
+                <th data-sortable="true">DC</th>
+                <th data-sortable="true">Std Stable1 (TB)</th>
+                <th data-sortable="true">Std Stable2 (TB)</th>
+                <th data-sortable="true">Std Arbor (TB)</th>
+                <th data-sortable="true">Stable1 (TB)</th>
+                <th data-sortable="true">Stable2 (TB)</th>
+                <th data-sortable="true">Arbor (TB)</th>
+                <th data-sortable="true">Gravit (TB)</th>
+                <th data-sortable="true">Today Date</th>
+                <th data-sortable="true">Remarks/Move Group Name</th>
+                <th data-sortable="true">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            <tr>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>A</td>
+                <td>{% now "Y-m-d" %}</td>
+                <td>A</td>
+                <td>A</td>
+            </tr>
+            </tbody>
+        </table>
+        </font>
+    </div>
+</section>
+
+<script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/vendor/bootstrap/js/popper.min.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/bootstrap-table.min.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/bootstrap-table.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/tableExport.min.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/extensions/toolbar/bootstrap-table-toolbar.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/extensions/toolbar/bootstrap-table-toolbar.min.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/extensions/export/bootstrap-table-export.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/extensions/export/bootstrap-table-export.min.js' %}"></script>
+<script src="{% static 'capacity_app/table_extensions/assets/extensions/filter-control/bootstrap-table-filter-control.min.js' %}"></script>
+
+<script src="{% static 'capacity_app/table_extensions/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src=" {% static 'capacity_app/table_extensions/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<script>
+    $('#example').bootstrapTable({
+    exportOptions: {
+        fileName: 'Completed Request'
+    }
+});
+</script>
+
+
+{% endblock content %}
+
+</body>
+</head>
+</html>
