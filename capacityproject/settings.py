@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'capacity_datadb',
         'USER': 'root',
-        'PASSWORD': 'root123',
+        'PASSWORD': 'root1234',
         'HOST': 'localhost',
         'PORT': '3306',
 
