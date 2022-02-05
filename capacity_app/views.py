@@ -89,10 +89,26 @@ def view_request(request):
 
 @csrf_exempt
 def update_request(request, pk):
-    print(pk)
-    data = CapacityData.objects.get(pk=pk)
-    return render(request, 'capacity_app/update_request.html', {"data": data})
+    if request.method == "POST":
+        data_center = request.POST['dc']
+        project = request.POST['project']
+        user_id = request.POST['user_id']
+        move_group_name = request.POST['move_group_name']
+        std_stable1 = request.POST['std_stable1']
+        std_stable2 = request.POST['std_stable2']
+        std_arbor = request.POST['std_arbor']
+        stable1 = request.POST['stable1']
+        stable2 = request.POST['stable2']
+        arbor = request.POST['arbor']
+        gravit = request.POST['gravit']
+        remarks = request.POST['remarks']
 
+        print(pk)
+        data = CapacityData.objects.get(pk=pk)
+        return render(request, 'capacity_app/update_request.html', {"data": data})
+    else:
+        data = CapacityData.objects.get(pk=pk)
+        return render(request, 'capacity_app/update_request.html', {"data": data})
 
 @csrf_exempt
 def completed_request(request):
