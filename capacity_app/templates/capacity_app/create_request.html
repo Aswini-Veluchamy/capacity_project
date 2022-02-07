@@ -6,9 +6,6 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <!-- Favicons -->
-    <link href="{% static 'capacity_app/assets/img/favicon.png' %}" rel="icon">
-    <link href="{% static 'capacity_app/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
     {% block content %}
     <title>Create Request</title>
     <style>
@@ -45,12 +42,12 @@ input[type="text"] {
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"></h5>
+                    <h5 class="card-title">Create Request - Alpha4</h5>
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label for="dc" class="form-label">Select DC</label>
+                                <label for="dc" class="form-label">Select DC <sup><strong>*</strong></sup></label>
                                 <select id="dc" class="form-select" name="dc" required>
                                     <option value="" selected="selected" disabled="disabled">Select DC</option>
                                     <option value="Ash">Ash</option>
@@ -59,7 +56,7 @@ input[type="text"] {
 
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="project" class="form-label">Select Project</label>
+                                <label for="project" class="form-label">Select Project <sup><strong>*</strong></sup></label>
                                 <select id="project" class="form-select" name="project" required>
                                     <option value="" selected="selected" disabled="disabled">Select Project</option>
                                     <option value="DUPONT">DUPONT</option>
@@ -109,24 +106,24 @@ input[type="text"] {
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label for="move_group_name" class="form-label">Remarks/Move Group Name</label>
+                                <label for="move_group_name" class="form-label">Move Group Name <sup><strong>*</strong></sup></label>
                                 <select id="move_group_name" class="form-select" name="move_group_name" required>
-                                    <option value="" selected="selected" disabled="disabled">Remarks/Move Group Name</option>
+                                    <option value="" selected="selected" disabled="disabled">Move Group Name</option>
                                     <option value="MoveGroup 1">MoveGroup 1</option>
                                     <option value="MoveGroup 2">MoveGroup 2</option>
                                     <option value="MoveGroup 3">MoveGroup 3</option>
                                 </select>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="remarks" class="form-label">Remarks/Move Group Name</label>
-                                <textarea id="remarks" maxlength="50" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
+                                <label for="remarks" class="form-label">Remarks <sup><strong>*</strong></sup></label>
+                                <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
                             </div>
                         </div>
                         <br>
                         <div class="text-center">
                             <p>{{error}}</p>
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{% url 'dashboard' %} " class="btn btn-primary" role="button">Cancel</a>
+                            <a href="{% url 'view_request' %} " class="btn btn-primary" role="button">Cancel</a>
                         </div>
                     </form>
 

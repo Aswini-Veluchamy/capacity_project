@@ -130,7 +130,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 STATIC_URL = '/static/'
 
-AUTO_LOGOUT_DELAY = 5
 # session settings
 SESSION_EXPIRE_SECONDS = 120
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
