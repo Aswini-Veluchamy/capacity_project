@@ -115,8 +115,11 @@ td {
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td nowrap class="status">{{i.tkt_status}}</td>
                                 <td>
+                                    {% if user_group == "member" %}
                                     <button type="button" class="btn btn-danger btn-sm" title="Edit Request"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-edit"></i></a></button>
+                                    {% elif user_group == "admin" %}
                                     <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
+                                    {% endif %}
                                 </td>
                                 {% endfor %}
                             </tr>

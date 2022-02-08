@@ -2,39 +2,52 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import CapacityData, HistoryData
-import time
 from datetime import datetime
+import time
 from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
+
 
 @csrf_exempt
 def user_login(request):
     context = {}
+    user_group = ""
     if request.method == "POST":
-        '''getting user data from form'''
         username = request.POST['username']
         password = request.POST['password']
 
-        ''' verifying user with the database'''
         user1 = authenticate(request, username=username, password=password)
-
         if user1:
             login(request, user1)
-            '''redirecting to dashboard page'''
+
+            group = request.user.groups.all()
+            if len(group) > 0:
+                user_group = group[0].name
+            else:
+                user_group = "member"
+
+            request.session["user_group"] = user_group
+
             return HttpResponseRedirect(reverse("dashboard"))
 
         else:
-            ''' user provide wrong credentials sending error msg'''
-
             context["error"] = "Provide Valid Credentials"
             return render(request, "capacity_app/login.html", context)
 
     else:
         return render(request, "capacity_app/login.html")
 
+
+def user_logout(request):
+    logout(request)
+    try:
+        del request.session["user_group"]
+    except:
+        pass
+    return HttpResponseRedirect(reverse('login'))
 
 @csrf_exempt
 @login_required
@@ -94,8 +107,11 @@ def create_request(request):
 @login_required
 def view_request(request):
     '''render all tickets to the front end'''
+    user_group = request.session["user_group"]
     data = CapacityData.objects.all()
-    return render(request, 'capacity_app/view_request.html', {'data': data})
+    return render(request, 'capacity_app/view_request.html', {'data': data,
+                                                              "user_group": user_group})
+
 
 
 @csrf_exempt
