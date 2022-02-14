@@ -66,6 +66,8 @@ td {
                                data-response-handler="responseHandler"
                                data-show-fullscreen="true"
                                data-show-pagination-switch="true"
+                               data-sort-name="updated_at"
+                               data-sort-order="desc"
                                data-height="500"
                                data-pagination-pre-text="Previous"
                                data-pagination-next-text="Next"
@@ -107,7 +109,7 @@ td {
                                 <td nowrap class="stable2">{{i.stable_2|floatformat}}</td>
                                 <td nowrap class="arbor">{{i.arbor|floatformat}}</td>
                                 <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
-                                <td nowrap class="updated_at">{{i.updated_time}}</td>
+                                <td nowrap class="updated_at">{{i.updated_time|date:'Y-m-d H:i:s'}}</td>
                                 <td nowrap class="move_group_name">{{i.move_group_name}}</td>
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td nowrap class="status">{{i.tkt_status}}</td>

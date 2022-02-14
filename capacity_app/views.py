@@ -36,10 +36,10 @@ def user_login(request):
         else:
             ''' user provide wrong credentials sending error msg'''
             context["error"] = "Provide Valid Credentials"
-            return render(request, "capacity_app/login1.html", context)
+            return render(request, "capacity_app/login.html", context)
 
     else:
-        return render(request, "capacity_app/login1.html")
+        return render(request, "capacity_app/login.html")
 
 
 def user_logout(request):
