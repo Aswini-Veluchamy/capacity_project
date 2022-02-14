@@ -48,11 +48,11 @@ input[type="text"] {
                         {% csrf_token %}
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label for="dc" class="form-label">Select DC</label>
+                                <label for="dc" class="form-label">Region</label>
                                 <input type="text" id="dc" class="form-control" name="dc" value="{{data.data_center}}" readonly />
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="project" class="form-label">Select Project</label>
+                                <label for="project" class="form-label">Project</label>
                                 <input type="text" id="project" class="form-control" name="project" value="{{data.project_name}}" readonly />
                             </div>
                         </div>

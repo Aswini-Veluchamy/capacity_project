@@ -61,6 +61,8 @@ td {
                                data-show-fullscreen="true"
                                data-show-pagination-switch="true"
                                data-height="500"
+                               data-sort-name="updated_at"
+                               data-sort-order="desc"
                                data-pagination-pre-text="Previous"
                                data-pagination-next-text="Next"
                                data-pagination-h-align="left"
@@ -101,7 +103,7 @@ td {
                                 <td nowrap class="stable2">{{i.stable_2|floatformat}}</td>
                                 <td nowrap class="arbor">{{i.arbor|floatformat}}</td>
                                 <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
-                                <td nowrap class="updated_at">{{i.updated_time}}</td>
+                                <td nowrap class="updated_at">{{i.updated_time|date:'Y-m-d H:i:s'}}</td>
                                 <td nowrap class="move_group_name">{{i.move_group_name}}</td>
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td nowrap class="status">{{i.tkt_status}}</td>
@@ -135,7 +137,7 @@ td {
 
 <script>
   function priceFormatter(value, row) {
-  var icon = row.status === 'ACTIVE' ? 'btn-success btn-sm' :
+  var icon = row.status === 'ACTIVE' ? 'btn-info btn-sm' :
   row.status === 'Pending' | row.status === 'PENDING' | row.status === 'pending' ? 'btn-warning btn-sm' :
   row.status === 'Work IN Progress' | row.status === 'work in progress' | row.status === 'WORK IN PROGRESS' ? 'btn-info btn-sm' :
   row.status === 'Completed' | row.status === 'COMPLETED' | row.status === 'completed' ?'btn-success btn-sm' :

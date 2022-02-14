@@ -47,11 +47,10 @@ input[type="text"] {
                     <h5 class="card-title">Create Request - Alpha4</h5>
                     <form method="POST">
                         {% csrf_token %}
-                        <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="dc" class="form-label">Select DC <sup><strong>*</strong></sup></label>
                                 <select id="dc" class="form-select" name="dc" required>
-                                    <option value="" selected="selected" disabled="disabled">Select DC</option>
+                                    <option value="" selected="selected" disabled="disabled">Select Region</option>
                                     <option value="Ash">Ash</option>
                                     <option value="Fpk">Fpk</option>
                                 </select>
@@ -61,52 +60,61 @@ input[type="text"] {
                                 <label for="project" class="form-label">Select Project <sup><strong>*</strong></sup></label>
                                 <select id="project" class="form-select" name="project" required>
                                     <option value="" selected="selected" disabled="disabled">Select Project</option>
-                                    <option value="DUPONT">DUPONT</option>
-                                    <option value="CORDIS">CORDIS</option>
+                                    <option value="{{user_group}}">{{user_group}}</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row">
+
                             <div class="mb-3 col-md-6">
-                                <label for="user_id" class="form-label">User ID</label>
+                                <label for="user_id" class="form-label">User ID <sup><strong>*</strong></sup></label>
                                 <input type="text" class="form-control" id="user_id" name="user_id" value="{{request.user.username}}" readonly>
                             </div>
+
                             <div class="mb-3 col-md-6">
+                                <label for="vol_type" class="form-label">Volume Type <sup><strong>*</strong></sup></label>
+                                <select id="vol_type" class="form-select" name="vol_type" required>
+                                    <option value="" selected="selected" disabled="disabled">Select Volume Type</option>
+                                    <option value="option1">Std Stable1</option>
+                                    <option value="option2">Std Stable2</option>
+                                    <option value="option3">Std Arbor</option>
+                                    <option value="option4">Stable1</option>
+                                    <option value="option5">Stable2</option>
+                                    <option value="option6">Arbor</option>
+                                    <option value="option7">Gravit</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3 col-md-6 vol_type" id="option1">
                                 <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
                                 <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="0" required>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
+
+                            <div class="mb-3 col-md-6 vol_type" id="option2">
                                 <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
                                 <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="0" required>
                             </div>
-                            <div class="mb-3 col-md-6">
+                            <div class="mb-3 col-md-6 vol_type" id="option3">
                                 <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
                                 <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="0" required>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
+
+                            <div class="mb-3 col-md-6 vol_type" id="option4">
                                 <label for="stable1" class="form-label">Stable1 (TB)</label>
                                 <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="0" required>
                             </div>
-                            <div class="mb-3 col-md-6">
+                            <div class="mb-3 col-md-6 vol_type" id="option5">
                                 <label for="stable2" class="form-label">Stable2 (TB)</label>
                                 <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="0" required>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
+
+                            <div class="mb-3 col-md-6 vol_type" id="option6">
                                 <label for="arbor" class="form-label">Arbor (TB)</label>
                                 <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="0" required>
                             </div>
-                            <div class="mb-3 col-md-6">
+                            <div class="mb-3 col-md-6 vol_type" id="option7">
                                 <label for="gravit" class="form-label">Gravit (TB)</label>
                                 <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="0" required>
                             </div>
-                        </div>
-                        <div class="row">
+
                             <div class="mb-3 col-md-6">
                                 <label for="move_group_name" class="form-label">Move Group Name <sup><strong>*</strong></sup></label>
                                 <select id="move_group_name" class="form-select" name="move_group_name" required>
@@ -120,7 +128,7 @@ input[type="text"] {
                                 <label for="remarks" class="form-label">Remarks <sup><strong>*</strong></sup></label>
                                 <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
                             </div>
-                        </div>
+
                         <br>
                         <div class="text-center">
                             <p>{{error}}</p>
@@ -145,7 +153,25 @@ input[type="text"] {
     });
 });
 </script>
+<script>
+    $(document).ready(function(){
 
+  //hides dropdown content
+  $(".vol_type").hide();
+
+  //unhides first option content
+  $("#option1").hide();
+
+  //listen to dropdown for change
+  $("#vol_type").change(function(){
+    //rehide content on change
+
+    //unhides current item
+    $('#'+$(this).val()).show();
+  });
+
+});
+</script>
 </body>
 {% endblock content %}
 </head>

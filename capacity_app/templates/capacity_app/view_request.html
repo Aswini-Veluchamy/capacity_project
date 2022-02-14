@@ -70,6 +70,8 @@ td {
                                data-show-fullscreen="true"
                                data-show-pagination-switch="true"
                                data-height="500"
+                               data-sort-name="updated_at"
+                               data-sort-order="desc"
                                data-pagination-pre-text="Previous"
                                data-pagination-next-text="Next"
                                data-pagination-h-align="left"
@@ -111,12 +113,12 @@ td {
                                 <td nowrap class="stable2">{{i.stable_2|floatformat}}</td>
                                 <td nowrap class="arbor">{{i.arbor|floatformat}}</td>
                                 <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
-                                <td nowrap class="updated_at">{{i.updated_time}}</td>
+                                <td nowrap class="updated_at">{{i.updated_time|date:'Y-m-d H:i:s'}}</td>
                                 <td nowrap class="move_group_name">{{i.move_group_name}}</td>
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td nowrap class="status">{{i.tkt_status}}</td>
-                                <td nowrap class="action">
-                                    {% if user_group == "member" %}
+                                <td>
+                                    {% if user_group != "admin" %}
                                     <button type="button" class="btn btn-danger btn-sm" title="Edit Request"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-edit"></i></a></button>
                                     {% elif user_group == "admin" %}
                                     <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
@@ -149,13 +151,18 @@ td {
 
 <!-- Core plugin JavaScript-->
 <script src=" {% static 'capacity_app/table_extensions/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
 <script>
   function priceFormatter(value, row) {
   var icon = row.status === 'ACTIVE' ? 'btn-info btn-sm' :
-  row.status === 'COMPLETED' ?'btn-success btn-sm' : 'btn-danger btn-sm'
+  row.status === 'Pending' | row.status === 'PENDING' | row.status === 'pending' ? 'btn-warning btn-sm' :
+  row.status === 'Work IN Progress' | row.status === 'work in progress' | row.status === 'WORK IN PROGRESS' ? 'btn-info btn-sm' :
+  row.status === 'Completed' | row.status === 'COMPLETED' | row.status === 'completed' ?'btn-success btn-sm' :
+  'btn-primary btn-sm'
   return '<button class="font btn ' + icon + '">' + value + '</button>'
   }
 </script>
+
 <script>
     $('#example').bootstrapTable({
     exportOptions: {

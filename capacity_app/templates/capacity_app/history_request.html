@@ -142,7 +142,10 @@ td {
 <script>
   function priceFormatter(value, row) {
   var icon = row.status === 'ACTIVE' ? 'btn-info btn-sm' :
-  row.status === 'COMPLETED' ?'btn-success btn-sm' : 'btn-danger btn-sm'
+  row.status === 'Pending' | row.status === 'PENDING' | row.status === 'pending' ? 'btn-warning btn-sm' :
+  row.status === 'Work IN Progress' | row.status === 'work in progress' | row.status === 'WORK IN PROGRESS' ? 'btn-info btn-sm' :
+  row.status === 'Completed' | row.status === 'COMPLETED' | row.status === 'completed' ?'btn-success btn-sm' :
+  'btn-primary btn-sm'
   return '<button class="font btn ' + icon + '">' + value + '</button>'
   }
 </script>

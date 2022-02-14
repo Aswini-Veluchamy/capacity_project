@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicons -->
-    <link href="{% static 'capacity_app/assets/img/favicon.png' %}" rel="icon">
-    <link href="{% static 'capacity_app/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <link href="{% static 'capacity_app/assets/img/logo.png' %}" rel="icon">
     <!-- Vendor CSS Files -->
     <link href="{% static 'capacity_app/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'capacity_app/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
@@ -44,7 +43,11 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <i class="bi bi-gear"></i>
+                            {% if user_group != "admin" %}
+                            <span>User Group - member</span>
+                            {% elif user_group == "admin" %}
                             <span>User Group - {{ user.groups.all.0 }}</span>
+                            {% endif %}
                         </a>
                     </li>
                     <li>
@@ -85,11 +88,13 @@
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                {% if user_group != "admin" %}
                 <li>
                     <a href="{% url 'create_request' %}">
                         <i class="bi bi-circle"></i><span>Create Request</span>
                     </a>
                 </li>
+                {% endif %}
                 <li>
                     <a href="{% url 'view_request' %}">
                         <i class="bi bi-circle"></i><span>View Request</span>
