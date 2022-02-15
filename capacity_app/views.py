@@ -23,13 +23,16 @@ def user_login(request):
         user1 = authenticate(request, username=username, password=password)
         if user1:
             login(request, user1)
-            group = request.user.groups.all()
-            if len(group) > 0:
-                user_group = group[0].name
-            else:
-                user_group = "member"
 
-            request.session["user_group"] = [user_group, username]
+            group = request.user.groups.all()
+            user_groups = [i.name for i in group]
+            print(user_groups)
+            # if len(group) > 0:
+            #     user_group = group[0].name
+            # else:
+            #     user_group = "member"
+
+            request.session["user_group"] = [user_groups, username]
             '''redirecting to dashboard page'''
             return HttpResponseRedirect(reverse("dashboard"))
 
@@ -54,7 +57,7 @@ def user_logout(request):
 @csrf_exempt
 @login_required
 def dashboard(request):
-    user_group = request.session["user_group"][0]
+    user_group = request.session["user_group"][0][0]
     return render(request, 'capacity_app/dashboard.html', {"user_group": user_group})
 
 
@@ -62,7 +65,9 @@ def dashboard(request):
 @login_required
 def create_request(request):
     tkt_status = "ACTIVE"
-    user_group = request.session["user_group"][0]
+    user_group = request.session["user_group"][0][0]
+    projects = request.session["user_group"][0]
+    print(projects, "=============================")
 
     ''' getting data from user form'''
     if request.method == "POST":
@@ -104,15 +109,15 @@ def create_request(request):
         request_data_create.save()
         return HttpResponseRedirect(reverse("view_request"))
     else:
-        return render(request, 'capacity_app/create_request.html', {"user_group": user_group})
+        return render(request, 'capacity_app/create_request.html', {"user_group": user_group, "projects": projects})
 
 
 @csrf_exempt
 @login_required
 def view_request(request):
-    """render all tickets to the front end"""
-    user_group = request.session["user_group"][0]
-    user_name = request.session["user_group"][1]
+    """render all request to the front end"""
+    user_group = request.session["user_group"][0][0]
+    user_name =  request.session["user_group"][1]
     if user_group == "admin":
         data = CapacityData.objects.all()
         return render(request, 'capacity_app/view_request.html', {'data': data,
@@ -212,14 +217,14 @@ def completed_request(request, pk):
 
 @login_required
 def history_request(request, id):
-    user_group = request.session["user_group"][0]
+    user_group = request.session["user_group"][0][0]
     data = HistoryData.objects.filter(request_id=id)
     return render(request, 'capacity_app/history_request.html', {"data": data, "user_group": user_group})
 
 
 @login_required
 def completeticketdata(request):
-    user_group = request.session["user_group"][0]
+    user_group = request.session["user_group"][0][0]
     user_name = request.session["user_group"][1]
     if user_group == "admin":
         data = HistoryData.objects.filter(tkt_status="Completed")

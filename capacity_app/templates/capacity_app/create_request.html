@@ -60,7 +60,9 @@ input[type="text"] {
                                 <label for="project" class="form-label">Select Project <sup><strong>*</strong></sup></label>
                                 <select id="project" class="form-select" name="project" required>
                                     <option value="" selected="selected" disabled="disabled">Select Project</option>
-                                    <option value="{{user_group}}">{{user_group}}</option>
+                                    {% for project in projects %}
+                                    <option value="{{project}}">{{project}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
 
