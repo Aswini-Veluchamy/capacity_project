@@ -70,7 +70,7 @@ def create_request(request):
     user_group = request.session["user_group"][0][0]
     projects = request.session["user_group"][0]
     email = request.session["user_group"][2]
-    print(projects, "=============================")
+    #print(projects, "=============================")
 
     ''' getting data from user form'''
     if request.method == "POST":
