@@ -10,6 +10,22 @@ import time
 from django.core.exceptions import ObjectDoesNotExist
 
 
+def send_mail(subj, msg):
+    import smtplib
+
+    sender = 'ecpadmin@us-east-1.tcsecp.com'
+    receivers = ['aswini.vel@tcs.com']
+
+    SUBJECT = subj
+    TEXT = msg
+    message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT)
+
+    smtpObj = smtplib.SMTP('172.25.240.25', 25)
+    smtpObj.sendmail(sender, receivers, message)
+
+    print("Successfully sent email")
+
+
 # Create your views here.
 @csrf_exempt
 def user_login(request):
@@ -125,10 +141,12 @@ def view_request(request):
     email = request.session["user_group"][2]
     if user_group == "admin":
         data = CapacityData.objects.all()
+        #send_mail("test-subject", "test-working")
         return render(request, 'capacity_app/view_request.html', {'data': data,
                                                                   "user_group": user_group, "email": email})
     else:
         data = CapacityData.objects.filter(user_id=str(user_name))
+
         return render(request, 'capacity_app/view_request.html', {'data': data,
                                                                   "user_group": user_group, "email": email})
 
