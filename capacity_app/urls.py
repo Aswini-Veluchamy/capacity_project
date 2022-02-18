@@ -11,5 +11,6 @@ urlpatterns = [
     path('completed_request/<str:pk>', views.completed_request, name='completed_request'),
     path('project_create_request/', views.project_create_request, name='project_create_request'),
     path('project_view_request/', views.project_view_request, name='project_view_request'),
+    path('approval/', views.approval, name='approval'),
     path('logout/', views.user_logout, name="logout")
 ]

@@ -300,3 +300,11 @@ def project_view_request(request):
     email = request.session["user_group"][2]
     return render(request, 'capacity_app/project_view_request.html', {
                                                                   "user_group": user_group, "email": email})
+
+@csrf_exempt
+@login_required
+def approval(request):
+    user_group = request.session["user_group"][0][0]
+    email = request.session["user_group"][2]
+    return render(request, 'capacity_app/approval.html', {
+                                                                  "user_group": user_group, "email": email})
