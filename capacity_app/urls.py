@@ -9,5 +9,7 @@ urlpatterns = [
     path('history_request/<str:id>', views.history_request, name='history_request'),
     path('completed_ticket_data/', views.completeticketdata, name='completed_ticket_data'),
     path('completed_request/<str:pk>', views.completed_request, name='completed_request'),
+    path('project_create_request/', views.project_create_request, name='project_create_request'),
+    path('project_view_request/', views.project_view_request, name='project_view_request'),
     path('logout/', views.user_logout, name="logout")
 ]

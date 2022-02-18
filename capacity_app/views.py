@@ -56,10 +56,10 @@ def user_login(request):
         else:
             ''' user provide wrong credentials sending error msg'''
             context["error"] = "Provide Valid Credentials"
-            return render(request, "capacity_app/login.html", context)
+            return render(request, "capacity_app/login1.html", context)
 
     else:
-        return render(request, "capacity_app/login.html")
+        return render(request, "capacity_app/login1.html")
 
 
 def user_logout(request):
@@ -262,3 +262,41 @@ def completeticketdata(request):
         data = HistoryData.objects.filter(user_id=user_name, tkt_status="Completed")
         return render(request, 'capacity_app/completed_request.html', {"data": data, "user_group": user_group,
                                                                        "email": email})
+
+@csrf_exempt
+@login_required
+def project_create_request(request):
+    user_group = request.session["user_group"][0][0]
+    projects = request.session["user_group"][0]
+    email = request.session["user_group"][2]
+
+    if request.method == "POST":
+        data_center = request.POST['dc']
+        project = request.POST['project']
+        user_id = request.POST['user_id']
+        mytext = request.POST.getlist('mytext[]')
+        mytext2 = request.POST.getlist('mytext2[]')
+        std_stable1 = request.POST['std_stable1']
+        std_stable2 = request.POST['std_stable2']
+        std_arbor = request.POST['std_arbor']
+        stable1 = request.POST['stable1']
+        stable2 = request.POST['stable2']
+        arbor = request.POST['arbor']
+        gravit = request.POST['gravit']
+        remarks = request.POST['remarks']
+        print(mytext,mytext2)
+
+        return HttpResponseRedirect(reverse("project_view_request"))
+    else:
+        user_group = request.session["user_group"][0][0]
+        email = request.session["user_group"][2]
+        return render(request, 'capacity_app/project_create_request.html', {
+            "projects": projects,    "user_group": user_group, "email": email})
+
+@csrf_exempt
+@login_required
+def project_view_request(request):
+    user_group = request.session["user_group"][0][0]
+    email = request.session["user_group"][2]
+    return render(request, 'capacity_app/project_view_request.html', {
+                                                                  "user_group": user_group, "email": email})
