@@ -161,7 +161,7 @@ td {
                                 <th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Move Group Name</th>
                                 <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
                                 <th nowrap class="status" data-field="status" data-sortable="true" data-formatter="priceFormatter" >Status</th>
-                                <th nowrap class="action" data-sortable="true">Actions</th>
+                                <!--<th nowrap class="action" data-sortable="true">Actions</th>-->
                             </tr>
                             </thead>
                             <tbody>
@@ -182,13 +182,13 @@ td {
                                 <td nowrap class="move_group_name">{{i.move_group_name}}</td>
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td nowrap class="status">{{i.tkt_status}}</td>
-                                <td>
+                                <!--<td>
                                     {% if user_group != "admin" %}
                                     <button type="button" class="btn btn-danger btn-sm" title="Edit Request"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-edit"></i></a></button>
                                     {% elif user_group == "admin" %}
                                     <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
                                     {% endif %}
-                                </td>
+                                </td>-->
                                 {% endfor %}
                             </tr>
                             </tbody>

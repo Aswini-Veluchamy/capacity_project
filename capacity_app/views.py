@@ -47,7 +47,7 @@ def user_login(request):
 
             print(user_groups, " == usergroups===")
 
-            if 'Project_Planer' in user_groups:
+            if 'Project_Planner' in user_groups:
                 return HttpResponseRedirect(reverse("project_create_request"))
 
             elif 'User_Group_Finance' in user_groups:
