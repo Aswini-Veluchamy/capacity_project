@@ -107,11 +107,11 @@ input[type="text"] {
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav1" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="{% url 'project_create_request' %}">
-                        <i class="bi bi-circle"></i><span>Create Project Request</span>
-                    </a>
-                </li>
+<!--                <li>-->
+<!--                    <a href="{% url 'project_create_request' %}">-->
+<!--                        <i class="bi bi-circle"></i><span>Create Project Request</span>-->
+<!--                    </a>-->
+<!--                </li>-->
                 <li>
                     <a href="{% url 'project_view_request' %}"  class="active">
                         <i class="bi bi-circle"></i><span>View Project Plan</span>
@@ -174,11 +174,25 @@ input[type="text"] {
                         <h5 class="card-title"></h5>
                         <div class="container">
                             <ul class="progressbar">
-
                                 <li class="active">Request Created</li>
-                                <li class="active">Finace Approval</li>
-                                <li>Procurement Approval</li>
-                                <li>Request Completed</li>
+
+                                {% if data.financial_approval == True %}
+                                    <li class="active">Finance Approval</li>
+                                {% else %}
+                                    <li>Finance Approval</li>
+                                {% endif %}
+
+                                {% if data.procurement_approval == True %}
+                                    <li class="active">Procurement Approval</li>
+                                {% else %}
+                                    <li>Procurement Approval</li>
+                                {% endif %}
+
+                                {% if data.procurement_approval == True and data.financial_approval == True%}
+                                    <li class="active">Request Completed</li>
+                                {% else %}
+                                    <li>Request Completed</li>
+                                {% endif %}
                             </ul>
                         </div>
                         <!--<br><br><br><br><br><br>
@@ -220,17 +234,17 @@ input[type="text"] {
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="user_id" class="form-label">User ID</label>
-                                    <input type="text" class="form-control" id="user_id" name="user_id" value="{{data.user_id}}" readonly>
+                                    <input type="text" class="form-control" id="user_id" name="user_id" value="{{data.user_name}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
-                                    <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="{{data.std_stable_1|floatformat}}"  readonly>
+                                    <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="{{data.std_stable1}}"  readonly>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
-                                    <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="{{data.std_stable_2|floatformat}}" readonly>
+                                    <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="{{data.std_stable2}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
@@ -240,11 +254,11 @@ input[type="text"] {
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="stable1" class="form-label">Stable1 (TB)</label>
-                                    <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="{{data.stable_1|floatformat}}" readonly>
+                                    <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="{{data.stable1}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="stable2" class="form-label">Stable2 (TB)</label>
-                                    <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="{{data.stable_2|floatformat}}" readonly>
+                                    <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="{{data.stable2}}" readonly>
                                 </div>
                             </div>
                             <div class="row">
@@ -264,9 +278,7 @@ input[type="text"] {
                                 </div>
                             </div>
                             <br>
-
                         </form>
-
                     </div>
                 </div>
             </div>

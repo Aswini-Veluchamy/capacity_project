@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import CapacityData, HistoryData
+from .models import CapacityData, HistoryData, ProjectPlannerData
 from datetime import datetime
 import time
 from django.core.exceptions import ObjectDoesNotExist
@@ -43,13 +43,19 @@ def user_login(request):
             group = request.user.groups.all()
 
             user_groups = [i.name for i in group]
-            print(user_groups)
-            # if len(group) > 0:
-            #     user_group = group[0].name
-            # else:
-            #     user_group = "member"
-
             request.session["user_group"] = [user_groups, username, email]
+
+            print(user_groups, " == usergroups===")
+
+            if 'Project_Planer' in user_groups:
+                return HttpResponseRedirect(reverse("project_create_request"))
+
+            elif 'User_Group_Finance' in user_groups:
+                return HttpResponseRedirect(reverse("financial_approval"))
+
+            elif 'User_Group_procurement' in user_groups:
+                return HttpResponseRedirect(reverse("procurement_approval"))
+
             '''redirecting to dashboard page'''
             return HttpResponseRedirect(reverse("dashboard"))
 
@@ -86,7 +92,6 @@ def create_request(request):
     user_group = request.session["user_group"][0][0]
     projects = request.session["user_group"][0]
     email = request.session["user_group"][2]
-    #print(projects, "=============================")
 
     ''' getting data from user form'''
     if request.method == "POST":
@@ -137,7 +142,7 @@ def create_request(request):
 def view_request(request):
     """render all request to the front end"""
     user_group = request.session["user_group"][0][0]
-    user_name =  request.session["user_group"][1]
+    user_name = request.session["user_group"][1]
     email = request.session["user_group"][2]
     if user_group == "admin":
         data = CapacityData.objects.all()
@@ -263,19 +268,17 @@ def completeticketdata(request):
         return render(request, 'capacity_app/completed_request.html', {"data": data, "user_group": user_group,
                                                                        "email": email})
 
+
 @csrf_exempt
 @login_required
 def project_create_request(request):
-    user_group = request.session["user_group"][0][0]
-    projects = request.session["user_group"][0]
-    email = request.session["user_group"][2]
 
     if request.method == "POST":
         data_center = request.POST['dc']
-        project = request.POST['project']
+        project_name = request.POST['project']
         user_id = request.POST['user_id']
-        mytext = request.POST.getlist('mytext[]')
-        mytext2 = request.POST.getlist('mytext2[]')
+        milestone_name = request.POST.getlist('mytext[]')
+        date = request.POST.getlist('mytext2[]')
         std_stable1 = request.POST['std_stable1']
         std_stable2 = request.POST['std_stable2']
         std_arbor = request.POST['std_arbor']
@@ -284,27 +287,91 @@ def project_create_request(request):
         arbor = request.POST['arbor']
         gravit = request.POST['gravit']
         remarks = request.POST['remarks']
-        print(mytext,mytext2)
 
+        # creating the project plans
+        query_data = ProjectPlannerData.objects.create(
+            data_center=data_center,
+            project_name=project_name,
+            user_name=user_id,
+            milestone_name=str(milestone_name),
+            date=date,
+            std_stable1=int(std_stable1),
+            std_stable2=int(std_stable2),
+            std_arbor=int(std_arbor),
+            stable1=int(stable1),
+            stable2=int(stable2),
+            arbor=int(arbor),
+            gravit=gravit,
+            remarks=remarks,
+            financial_approval=False,
+            procurement_approval=False
+        )
+        query_data.save()
         return HttpResponseRedirect(reverse("project_view_request"))
+
     else:
         user_group = request.session["user_group"][0][0]
+        projects = request.session["user_group"][0][0]
         email = request.session["user_group"][2]
-        return render(request, 'capacity_app/project_create_request.html', {
-            "projects": projects,    "user_group": user_group, "email": email})
+        query_set = ProjectPlannerData.objects.filter(project_name=projects)
+
+        if len(query_set) > 0:
+            return HttpResponseRedirect(reverse("project_view_request"))
+        else:
+            return render(request, 'capacity_app/project_create_request.html',
+                          {"projects": projects, "user_group": user_group, "email": email})
+
 
 @csrf_exempt
 @login_required
 def project_view_request(request):
     user_group = request.session["user_group"][0][0]
     email = request.session["user_group"][2]
-    return render(request, 'capacity_app/project_view_request.html', {
-                                                                  "user_group": user_group, "email": email})
+    project = request.session["user_group"][0][0]
+    query_set = ProjectPlannerData.objects.get(project_name=project)
+    return render(request, 'capacity_app/project_view_request.html',
+                {"user_group": user_group, "email": email, "data": query_set})
 
-@csrf_exempt
+
 @login_required
-def approval(request):
-    user_group = request.session["user_group"][0][0]
+def financial_approval(request):
     email = request.session["user_group"][2]
-    return render(request, 'capacity_app/approval.html', {
-                                                                  "user_group": user_group, "email": email})
+    query_set = ProjectPlannerData.objects.filter(financial_approval=False)
+    return render(request, 'capacity_app/financial_approval.html', {"email": email,
+                                                                    "data": query_set})
+
+
+@login_required
+def completed_financial_approval(request, pk):
+    ''' updating the new vales in table '''
+    ProjectPlannerData.objects.filter(pk=pk).update(financial_approval=True)
+    return HttpResponseRedirect(reverse("financial_completed_request"))
+
+
+@login_required
+def financial_completed_request(request):
+    email = request.session["user_group"][2]
+    query_set = ProjectPlannerData.objects.filter(financial_approval=True)
+    return render(request, 'capacity_app/finance_completed.html', {"email": email, "data": query_set})
+
+
+@login_required
+def procurement_approval(request):
+    email = request.session["user_group"][2]
+    query_set = ProjectPlannerData.objects.filter(financial_approval=True, procurement_approval=False)
+    return render(request, 'capacity_app/procurement_approval.html', {"email": email, "data": query_set})
+
+
+@login_required
+def completed_procurement_approval(request, pk):
+    ''' updating the new vales in table '''
+    ProjectPlannerData.objects.filter(pk=pk).update(procurement_approval=True)
+    return HttpResponseRedirect(reverse("procurement_completed_request"))
+
+
+@login_required
+def procurement_completed_request(request):
+    email = request.session["user_group"][2]
+    query_set = ProjectPlannerData.objects.filter(procurement_approval=True)
+    return render(request, 'capacity_app/procurement_completed_request.html', {"email": email, "data": query_set})
+

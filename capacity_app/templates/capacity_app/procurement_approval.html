@@ -37,24 +37,38 @@ td {
 .action {
     text-align: center;
 }
-.header .toggle-sidebar-btn {
-    visibility: hidden;
-}
 </style>
 <body>
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
 
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'procurement_approval' %}">
+                <i class="bi bi-grid"></i>
+                <span>Procurement Approval</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
 
-<main id="main" class="main" style="margin-left:0px;">
-<div class="pagetitle">
-    <h1>Approval Request</h1>
-</div><!-- End Page Title -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'procurement_completed_request' %}">
+                <i class="bi bi-grid"></i>
+                <span>Procurement Completed Request</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+    </ul>
+
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
 
 <section class="section dashboard">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Approval Request - Alpha4</h5>
+                    <h5 class="card-title">Approval Request - Procurement</h5>
                     <font size="2" face = "futura,helvetica">
                         <table class="table table-bordered table-striped" id="example"
                                data-toggle="table"
@@ -80,6 +94,7 @@ td {
                                data-buttons-class="primary">
                             <thead>
                             <tr>
+                                <tr>
                                 <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
                                 <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
                                 <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
@@ -92,31 +107,31 @@ td {
                                 <th nowrap class="arbor" data-field="arbor" data-sortable="true" >Arbor (TB)</th>
                                 <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                 <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
-                                <th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Move Group Name</th>
                                 <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
                                 <th nowrap class="action" data-sortable="true">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-
-                            <tr>
-                                <td nowrap class="request_id">{{i.request_id}}</td>
+                            {% for i in data %}
+                             <tr>
+                                <td nowrap class="id">{{i.id}}</td>
                                 <td nowrap class="dc">{{i.data_center}}</td>
                                 <td nowrap class="project_name">{{i.project_name}}</td>
-                                <td nowrap class="user_id">{{i.user_id}}</td>
-                                <td nowrap class="std_stable1">{{i.std_stable_1|floatformat}}</td>
-                                <td nowrap class="std_stable2">{{i.std_stable_2|floatformat}}</td>
+                                <td nowrap class="user_id">{{i.user_name}}</td>
+                                <td nowrap class="std_stable1">{{i.std_stable1}}</td>
+                                <td nowrap class="std_stable2">{{i.std_stable2|floatformat}}</td>
                                 <td nowrap class="std_arbor">{{i.std_arbor|floatformat}}</td>
-                                <td nowrap class="stable1">{{i.stable_1|floatformat}}</td>
-                                <td nowrap class="stable2">{{i.stable_2|floatformat}}</td>
-                                <td nowrap class="arbor">{{i.arbor|floatformat}}</td>
-                                <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
-                                <td nowrap class="updated_at">{{i.updated_time|date:'Y-m-d H:i:s'}}</td>
-                                <td nowrap class="move_group_name">{{i.move_group_name}}</td>
+                                <td nowrap class="stable1">{{i.stable1}}</td>
+                                <td nowrap class="stable2">{{i.stable2}}</td>
+                                <td nowrap class="arbor">{{i.arbor}}</td>
+                                <td nowrap class="gravit">{{i.gravit}}</td>
+                                <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="#"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
+                                    <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_procurement_approval' pk=i.id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
                                 </td>
+                                 {% endfor %}
+
                             </tr>
                             </tbody>
                         </table>
@@ -144,6 +159,24 @@ td {
 <!-- Core plugin JavaScript-->
 <script src=" {% static 'capacity_app/table_extensions/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
+<script>
+  function priceFormatter(value, row) {
+  var icon = row.status === 'ACTIVE' ? 'btn-info btn-sm' :
+  row.status === 'Pending' | row.status === 'PENDING' | row.status === 'pending' ? 'btn-warning btn-sm' :
+  row.status === 'Work IN Progress' | row.status === 'work in progress' | row.status === 'WORK IN PROGRESS' ? 'btn-info btn-sm' :
+  row.status === 'Completed' | row.status === 'COMPLETED' | row.status === 'completed' ?'btn-success btn-sm' :
+  'btn-primary btn-sm'
+  return '<button class="font btn ' + icon + '">' + value + '</button>'
+  }
+</script>
+
+<script>
+    $('#example').bootstrapTable({
+    exportOptions: {
+        fileName: 'Procurement Approval'
+    }
+});
+</script>
 
 {% endblock content %}
 

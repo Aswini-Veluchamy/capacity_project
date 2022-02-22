@@ -1,5 +1,31 @@
 from django.db import models
 
+
+class ProjectPlannerData(models.Model):
+    data_center = models.CharField(max_length=128)
+    project_name = models.CharField(max_length=128)
+    user_name = models.CharField(max_length=128)
+    milestone_name = models.CharField(max_length=128)
+    date = models.CharField(max_length=128)
+    std_stable1 = models.IntegerField()
+    std_stable2 = models.IntegerField()
+    std_arbor = models.IntegerField()
+    stable1 = models.IntegerField()
+    stable2 = models.IntegerField()
+    arbor = models.IntegerField()
+    gravit = models.IntegerField()
+    remarks = models.CharField(max_length=200)
+    financial_approval = models.BooleanField()
+    procurement_approval = models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user_name
+
+    class Meta:
+        db_table = "project_planner_data"
+
+
 class CapacityData(models.Model):
     request_id = models.CharField(max_length=128, primary_key=True)
     created_time = models.DateTimeField(auto_now_add=True)
