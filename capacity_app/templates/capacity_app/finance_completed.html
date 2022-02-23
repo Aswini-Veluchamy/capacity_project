@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     {% block content %}
-    <title>View Request</title>
+    <title>Finance - Completed</title>
     <link href="{% static 'capacity_app/table_extensions/fontawesome-free-5.15.1/css/all.css' %}" rel="stylesheet">
     <link href="{% static 'capacity_app/table_extensions/fontawesome-free-5.15.1/css/all.min.css' %}" rel="stylesheet">
     <!-- Custom styles for this template-->
@@ -34,7 +34,9 @@ td {
     background-color: #17a2b8;
     border-color: #17a2b8;
 }
-
+.card-view {
+    height:30px;
+}
 </style>
 <body>
 <!-- ======= Sidebar ======= -->
@@ -44,14 +46,14 @@ td {
         <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'financial_approval' %}">
                 <i class="bi bi-grid"></i>
-                <span>Finance Approval</span>
+                <span>Approval Request</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'financial_completed_request' %}">
                 <i class="bi bi-grid"></i>
-                <span>Finance Completed Request</span>
+                <span>Completed Request</span>
             </a>
         </li><!-- End Dashboard Nav -->
     </ul>
@@ -61,86 +63,83 @@ td {
 <main id="main" class="main">
 
 
-<section class="section dashboard">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Completed Request - Finance</h5>
-                    <font size="2" face = "futura,helvetica">
-                        <table class="table table-bordered table-striped" id="example"
-                               data-toggle="table"
-                               data-pagination="true"
-                               data-search="true"
-                               data-show-columns="true"
-                               data-show-toggle="true"
-                               data-show-columns-toggle-all="false"
-                               data-show-export="true"
-                               data-export-data-type="all"
-                               data-response-handler="responseHandler"
-                               data-show-fullscreen="true"
-                               data-show-pagination-switch="true"
-                               data-height="500"
-                               data-sort-name="updated_at"
-                               data-sort-order="desc"
-                               data-pagination-pre-text="Previous"
-                               data-pagination-next-text="Next"
-                               data-pagination-h-align="left"
-                               data-pagination-detail-h-align="right"
-                               data-page-size="20"
-                               data-page-list="[20, 30, 40, 50, All]"
-                               data-buttons-class="primary">
-                            <thead>
-                            <tr>
-                                <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
-                                <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
-                                <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
-                                <th nowrap class="user_id" data-field="user_id" data-sortable="true" >User ID</th>
-                                <th nowrap class="std_stable1" data-field="std_stable1" data-sortable="true" >Std Stable1 (TB)</th>
-                                <th nowrap class="std_stable2" data-field="std_stable2" data-sortable="true" >Std Stable2 (TB)</th>
-                                <th nowrap class="std_arbor" data-field="std_arbor" data-sortable="true" >Std Arbor (TB)</th>
-                                <th nowrap class="stable1" data-field="stable1" data-sortable="true" >Stable1 (TB)</th>
-                                <th nowrap class="stable2" data-field="stable2" data-sortable="true" >Stable2 (TB)</th>
-                                <th nowrap class="arbor" data-field="arbor" data-sortable="true" >Arbor (TB)</th>
-                                <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
-                                <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
-                                <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Completed Request - Finance</h5>
+                        <font size="2" face = "futura,helvetica">
+                            <table class="table table-bordered table-striped" id="example"
+                                   data-toggle="table"
+                                   data-card-view="true"
+                                   data-pagination="true"
+                                   data-search="true"
+                                   data-show-columns="false"
+                                   data-show-toggle="false"
+                                   data-show-columns-toggle-all="false"
+                                   data-show-export="true"
+                                   data-export-data-type="all"
+                                   data-response-handler="responseHandler"
+                                   data-show-fullscreen="true"
+                                   data-show-pagination-switch="false"
+                                   data-height="650"
+                                   data-sort-name="updated_at"
+                                   data-sort-order="desc"
+                                   data-pagination-pre-text="Previous"
+                                   data-pagination-next-text="Next"
+                                   data-pagination-h-align="left"
+                                   data-pagination-detail-h-align="right"
+                                   data-page-size="1"
+                                   data-page-list="[20, 30, 40, 50, All]"
+                                   data-buttons-class="primary">
+                                <thead>
+                                <tr>
+                                    <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
+                                    <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
+                                    <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
+                                    <th nowrap class="user_id" data-field="user_id" data-sortable="true" >User ID</th>
+                                    <th nowrap class="std_stable1" data-field="std_stable1" data-sortable="true" >Std Stable1 (TB)</th>
+                                    <th nowrap class="std_stable2" data-field="std_stable2" data-sortable="true" >Std Stable2 (TB)</th>
+                                    <th nowrap class="std_arbor" data-field="std_arbor" data-sortable="true" >Std Arbor (TB)</th>
+                                    <th nowrap class="stable1" data-field="stable1" data-sortable="true" >Stable1 (TB)</th>
+                                    <th nowrap class="stable2" data-field="stable2" data-sortable="true" >Stable2 (TB)</th>
+                                    <th nowrap class="arbor" data-field="arbor" data-sortable="true" >Arbor (TB)</th>
+                                    <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
+                                    <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
+                                    <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
+                                    <th nowrap class="milestone_name" data-field="milestone_name" data-sortable="true">{{i.milestone_name}}</th>
+                                    <th nowrap class="action" data-sortable="true" data-formatter="priceFormatter">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 {% for i in data %}
-                                <th>{{i.milestone_name}}</th>
-                                {% endfor %}
-                                <th nowrap class="action" data-sortable="true" data-formatter="priceFormatter">Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for i in data %}
-                             <tr>
-                                <td nowrap class="id">{{i.id}}</td>
-                                <td nowrap class="dc">{{i.data_center}}</td>
-                                <td nowrap class="project_name">{{i.project_name}}</td>
-                                <td nowrap class="user_id">{{i.user_name}}</td>
-                                <td nowrap class="std_stable1">{{i.std_stable1}}</td>
-                                <td nowrap class="std_stable2">{{i.std_stable2|floatformat}}</td>
-                                <td nowrap class="std_arbor">{{i.std_arbor|floatformat}}</td>
-                                <td nowrap class="stable1">{{i.stable1}}</td>
-                                <td nowrap class="stable2">{{i.stable2}}</td>
-                                <td nowrap class="arbor">{{i.arbor}}</td>
-                                <td nowrap class="gravit">{{i.gravit}}</td>
-                                <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
-                                <td nowrap class="remarks">{{i.remarks}}</td>
-                                 {% for i in data %}
-                                <th>{{i.date}}</th>
-                                {% endfor %}
-                                <td nowrap class="action">Completed</td>
-                                {% endfor %}
-                            </tr>
-                            </tbody>
-                        </table>
-                    </font>
+                                <tr>
+                                    <td nowrap class="id">{{i.id}}</td>
+                                    <td nowrap class="dc">{{i.data_center}}</td>
+                                    <td nowrap class="project_name">{{i.project_name}}</td>
+                                    <td nowrap class="user_id">{{i.user_name}}</td>
+                                    <td nowrap class="std_stable1">{{i.std_stable1}}</td>
+                                    <td nowrap class="std_stable2">{{i.std_stable2|floatformat}}</td>
+                                    <td nowrap class="std_arbor">{{i.std_arbor|floatformat}}</td>
+                                    <td nowrap class="stable1">{{i.stable1}}</td>
+                                    <td nowrap class="stable2">{{i.stable2}}</td>
+                                    <td nowrap class="arbor">{{i.arbor}}</td>
+                                    <td nowrap class="gravit">{{i.gravit}}</td>
+                                    <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
+                                    <td nowrap class="remarks">{{i.remarks}}</td>
+                                    <td nowrap class="milestone_name">{{i.date}}</td>
+                                    <td nowrap class="action">Completed</td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </font>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </main>
 <script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'capacity_app/table_extensions/vendor/bootstrap/js/popper.js' %}"></script>

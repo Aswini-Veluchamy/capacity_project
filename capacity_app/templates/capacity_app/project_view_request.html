@@ -107,11 +107,11 @@ input[type="text"] {
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav1" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-<!--                <li>-->
-<!--                    <a href="{% url 'project_create_request' %}">-->
-<!--                        <i class="bi bi-circle"></i><span>Create Project Request</span>-->
-<!--                    </a>-->
-<!--                </li>-->
+                <!--<li>
+                    <a href="{% url 'project_create_request' %}">
+                        <i class="bi bi-circle"></i><span>Create Project Request</span>
+                    </a>
+                </li>-->
                 <li>
                     <a href="{% url 'project_view_request' %}"  class="active">
                         <i class="bi bi-circle"></i><span>View Project Plan</span>
@@ -141,11 +141,11 @@ input[type="text"] {
                         <i class="bi bi-circle"></i><span>View Request</span>
                     </a>
                 </li>
-                <li>
+                <!--<li>
                     <a href="{% url 'completed_ticket_data' %}">
                         <i class="bi bi-circle"></i><span>Completed Request</span>
                     </a>
-                </li>
+                </li>-->
             </ul>
         </li><!-- End Components Nav -->
 
@@ -177,21 +177,21 @@ input[type="text"] {
                                 <li class="active">Request Created</li>
 
                                 {% if data.financial_approval == True %}
-                                    <li class="active">Finance Approval</li>
+                                <li class="active">Finance Approval</li>
                                 {% else %}
-                                    <li>Finance Approval</li>
+                                <li>Finance Approval</li>
                                 {% endif %}
 
                                 {% if data.procurement_approval == True %}
-                                    <li class="active">Procurement Approval</li>
+                                <li class="active">Procurement Approval</li>
                                 {% else %}
-                                    <li>Procurement Approval</li>
+                                <li>Procurement Approval</li>
                                 {% endif %}
 
                                 {% if data.procurement_approval == True and data.financial_approval == True%}
-                                    <li class="active">Request Completed</li>
+                                <li class="active">Request Completed</li>
                                 {% else %}
-                                    <li>Request Completed</li>
+                                <li>Request Completed</li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -278,6 +278,15 @@ input[type="text"] {
                                 </div>
                             </div>
                             <br>
+                            <label class="form-label">Milestone</label>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <p class="form-control" readonly>{{data.milestone_name}}</p>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <p class="form-control" readonly>{{data.date}}</p>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -286,7 +295,6 @@ input[type="text"] {
     </section>
 </main>
 <script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery2.1.min.js' %}"></script>
-
 </body>
 {% endblock content %}
 </head>
