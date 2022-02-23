@@ -94,7 +94,6 @@ td {
                                data-buttons-class="primary">
                             <thead>
                             <tr>
-                                <tr>
                                 <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
                                 <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
                                 <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
@@ -108,6 +107,9 @@ td {
                                 <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                 <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
                                 <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
+                                {% for i in data %}
+                                <th>{{i.milestone_name}}</th>
+                                {% endfor %}
                                 <th nowrap class="action" data-sortable="true">Actions</th>
                             </tr>
                             </thead>
@@ -127,8 +129,11 @@ td {
                                 <td nowrap class="gravit">{{i.gravit}}</td>
                                 <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
                                 <td nowrap class="remarks">{{i.remarks}}</td>
+                                 {% for i in data %}
+                                <th>{{i.date}}</th>
+                                {% endfor %}
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_financial_approval' pk=i.id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
+                                    <button type="button" class="btn btn-primary btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_financial_approval' pk=i.id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
                                 </td>
                                  {% endfor %}
                             </tr>

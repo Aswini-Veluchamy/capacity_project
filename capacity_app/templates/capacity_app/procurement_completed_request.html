@@ -94,7 +94,6 @@ td {
                                data-buttons-class="primary">
                             <thead>
                             <tr>
-                                <tr>
                                 <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
                                 <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
                                 <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
@@ -108,7 +107,7 @@ td {
                                 <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                 <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
                                 <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
-                                <th nowrap class="action" data-sortable="true">Actions</th>
+                                <th nowrap class="action" data-sortable="true" data-formatter="priceFormatter">Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -164,7 +163,7 @@ td {
   row.status === 'Pending' | row.status === 'PENDING' | row.status === 'pending' ? 'btn-warning btn-sm' :
   row.status === 'Work IN Progress' | row.status === 'work in progress' | row.status === 'WORK IN PROGRESS' ? 'btn-info btn-sm' :
   row.status === 'Completed' | row.status === 'COMPLETED' | row.status === 'completed' ?'btn-success btn-sm' :
-  'btn-primary btn-sm'
+  'btn-success btn-sm'
   return '<button class="font btn ' + icon + '">' + value + '</button>'
   }
 </script>
