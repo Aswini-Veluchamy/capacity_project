@@ -344,17 +344,18 @@ def project_view_request(request):
     user_group = request.session["user_group"][0]
     email = request.session["user_group"][3]
     project = request.session["user_group"][1]
+
     if "admin" not in user_group:
         query_set = ProjectPlannerData.objects.filter(project_name=project[0])
         print(query_set[0].project_name)
         query_set1 = ProjectPlannerData.objects.filter(project_name=project[0], financial_approval=True,
                                                       procurement_approval=True)
         return render(request, 'capacity_app/project_view_request.html',
-                    {"user_group": user_group, "email": email, "data": query_set, "query_set": query_set1})
+                    {"user_group": user_group, "email": email, "data": query_set, "query_data": query_set1})
     else:
         query_set = ProjectPlannerData.objects.filter(project_name=project[0])
         return render(request, 'capacity_app/project_view_request.html',
-                      {"user_group": user_group, "email": email, "data": query_set, "query_set": "admin"})
+                      {"user_group": user_group, "email": email, "data": query_set, "query_data": "admin"})
 
 
 

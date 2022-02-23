@@ -47,11 +47,6 @@ input[type="text"] {
             </a>
             <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{% url 'project_create_request' %}">
-                        <i class="bi bi-circle"></i><span>Create Project Request</span>
-                    </a>
-                </li>
-                <li>
                     <a href="{% url 'project_view_request' %}">
                         <i class="bi bi-circle"></i><span>View Project Plan</span>
                     </a>
@@ -182,7 +177,7 @@ input[type="text"] {
                                 <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="0" required>
                             </div>
 
-                            <div class="mb-3 col-md-6">
+                            <!--<div class="mb-3 col-md-6">
                                 <label for="move_group_name" class="form-label">Move Group Name <sup><strong>*</strong></sup></label>
                                 <select id="move_group_name" class="form-select" name="move_group_name" required>
                                     <option value="" selected="selected" disabled="disabled">Move Group Name</option>
@@ -190,7 +185,7 @@ input[type="text"] {
                                     <option value="MoveGroup 2">MoveGroup 2</option>
                                     <option value="MoveGroup 3">MoveGroup 3</option>
                                 </select>
-                            </div>
+                            </div>-->
                             <div class="mb-3 col-md-6">
                                 <label for="remarks" class="form-label">Remarks <sup><strong>*</strong></sup></label>
                                 <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" required></textarea>

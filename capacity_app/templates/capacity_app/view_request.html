@@ -58,11 +58,6 @@ td {
             </a>
             <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{% url 'project_create_request' %}">
-                        <i class="bi bi-circle"></i><span>Create Project Request</span>
-                    </a>
-                </li>
-                <li>
                     <a href="{% url 'project_view_request' %}">
                         <i class="bi bi-circle"></i><span>View Project Plan</span>
                     </a>
@@ -158,7 +153,7 @@ td {
                                 <th nowrap class="arbor" data-field="arbor" data-sortable="true" >Arbor (TB)</th>
                                 <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                 <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
-                                <th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Move Group Name</th>
+                                <!--<th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Move Group Name</th>-->
                                 <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
                                 <th nowrap class="status" data-field="status" data-sortable="true" data-formatter="priceFormatter" >Status</th>
                                 <!--<th nowrap class="action" data-sortable="true">Actions</th>-->
@@ -167,7 +162,7 @@ td {
                             <tbody>
                             {% for i in data %}
                             <tr>
-                                <td nowrap class="request_id"><a href={% url 'history_request' id=i.request_id %} style="text-decoration:underline;">{{i.request_id}}</a></td>
+                                <td nowrap class="request_id">{{i.request_id}}</td>
                                 <td nowrap class="dc">{{i.data_center}}</td>
                                 <td nowrap class="project_name">{{i.project_name}}</td>
                                 <td nowrap class="user_id">{{i.user_id}}</td>
@@ -179,7 +174,7 @@ td {
                                 <td nowrap class="arbor">{{i.arbor|floatformat}}</td>
                                 <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
                                 <td nowrap class="updated_at">{{i.updated_time|date:'Y-m-d H:i:s'}}</td>
-                                <td nowrap class="move_group_name">{{i.move_group_name}}</td>
+                                <!--<td nowrap class="move_group_name">{{i.move_group_name}}</td>-->
                                 <td nowrap class="remarks">{{i.remarks}}</td>
                                 <td nowrap class="status">{{i.tkt_status}}</td>
                                 <!--<td>
