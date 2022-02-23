@@ -37,17 +37,21 @@ def user_login(request):
         password = request.POST['password']
         ''' verifying user with the database'''
         user1 = authenticate(request, username=username, password=password)
+
         if user1:
+
             login(request, user1)
             email = user1.email
             group = request.user.groups.all()
 
-            user_groups = [i.name for i in group]
-            request.session["user_group"] = [user_groups, username, email]
+            projects = [i.name for i in group if "User_Group" not in i.name]
 
-            print(user_groups, " == usergroups===")
+            user_groups = [i.name for i in group if i.name in ["User_Group_Project_Planner", 'User_Group_Finance',
+                                                               'User_Group_procurement', "admin", "member"]]
 
-            if 'Project_Planner' in user_groups:
+            request.session["user_group"] = [user_groups, projects, username, email]
+
+            if 'User_Group_Project_Planner' in user_groups:
                 return HttpResponseRedirect(reverse("project_create_request"))
 
             elif 'User_Group_Finance' in user_groups:
@@ -80,18 +84,25 @@ def user_logout(request):
 @csrf_exempt
 @login_required
 def dashboard(request):
-    user_group = request.session["user_group"][0][0]
-    email = request.session["user_group"][2]
-    return render(request, 'capacity_app/dashboard.html', {"user_group": user_group, "email": email})
+    user_group = request.session["user_group"][0]
+    project = request.session["user_group"][1]
+    email = request.session["user_group"][3]
+    if "admin" not in user_group:
+        query_set = ProjectPlannerData.objects.filter(project_name=project[0], financial_approval=True, procurement_approval=True)
+        return render(request, 'capacity_app/dashboard.html', {"user_group": user_group, "email": email, "query_data": query_set})
+    else:
+        return render(request, 'capacity_app/dashboard.html',
+                      {"user_group": user_group, "email": email, "query_set": "admin"})
+
 
 
 @csrf_exempt
 @login_required
 def create_request(request):
     tkt_status = "ACTIVE"
-    user_group = request.session["user_group"][0][0]
-    projects = request.session["user_group"][0]
-    email = request.session["user_group"][2]
+    user_group = request.session["user_group"][0]
+    projects = request.session["user_group"][1]
+    email = request.session["user_group"][3]
 
     ''' getting data from user form'''
     if request.method == "POST":
@@ -141,8 +152,8 @@ def create_request(request):
 @login_required
 def view_request(request):
     """render all request to the front end"""
-    user_group = request.session["user_group"][0][0]
-    user_name = request.session["user_group"][1]
+    user_group = request.session["user_group"][0]
+    user_name = request.session["user_group"][2]
     email = request.session["user_group"][2]
     if user_group == "admin":
         data = CapacityData.objects.all()
@@ -208,7 +219,7 @@ def update_request(request, pk):
     else:
         data = CapacityData.objects.get(pk=pk)
         user_group = request.session["user_group"][0]
-        email = request.session["user_group"][2]
+        email = request.session["user_group"][3]
         return render(request, 'capacity_app/update_request.html', {"data": data, "user_group": user_group,
                                                                     "email": email})
 
@@ -247,8 +258,8 @@ def completed_request(request, pk):
 
 @login_required
 def history_request(request, id):
-    user_group = request.session["user_group"][0][0]
-    email = request.session["user_group"][2]
+    user_group = request.session["user_group"][0]
+    email = request.session["user_group"][3]
     data = HistoryData.objects.filter(request_id=id)
     return render(request, 'capacity_app/history_request.html', {"data": data, "user_group": user_group,
                                                                  "email": email})
@@ -256,9 +267,9 @@ def history_request(request, id):
 
 @login_required
 def completeticketdata(request):
-    user_group = request.session["user_group"][0][0]
+    user_group = request.session["user_group"][0]
     user_name = request.session["user_group"][1]
-    email = request.session["user_group"][2]
+    email = request.session["user_group"][3]
     if user_group == "admin":
         data = HistoryData.objects.filter(tkt_status="Completed")
         return render(request, 'capacity_app/completed_request.html', {"data": data, "user_group": user_group,
@@ -310,32 +321,46 @@ def project_create_request(request):
         return HttpResponseRedirect(reverse("project_view_request"))
 
     else:
-        user_group = request.session["user_group"][0][0]
-        projects = request.session["user_group"][0][0]
-        email = request.session["user_group"][2]
-        query_set = ProjectPlannerData.objects.filter(project_name=projects)
+        user_group = request.session["user_group"][0]
+        projects = request.session["user_group"][1]
+        email = request.session["user_group"][3]
+        query_set = ProjectPlannerData.objects.filter(project_name=projects[0])
 
         if len(query_set) > 0:
             return HttpResponseRedirect(reverse("project_view_request"))
         else:
-            return render(request, 'capacity_app/project_create_request.html',
-                          {"projects": projects, "user_group": user_group, "email": email})
+            if "admin" not in user_group:
+                query_set = ProjectPlannerData.objects.filter(project_name=projects[0], financial_approval=True, procurement_approval=True)
+                return render(request, 'capacity_app/project_create_request.html',
+                            {"projects": projects, "user_group": user_group, "email": email, "query_set": query_set})
+            else:
+                pass
+
 
 
 @csrf_exempt
 @login_required
 def project_view_request(request):
-    user_group = request.session["user_group"][0][0]
-    email = request.session["user_group"][2]
-    project = request.session["user_group"][0][0]
-    query_set = ProjectPlannerData.objects.get(project_name=project)
-    return render(request, 'capacity_app/project_view_request.html',
-                {"user_group": user_group, "email": email, "data": query_set})
+    user_group = request.session["user_group"][0]
+    email = request.session["user_group"][3]
+    project = request.session["user_group"][1]
+    if "admin" not in user_group:
+        query_set = ProjectPlannerData.objects.filter(project_name=project[0])
+        print(query_set[0].project_name)
+        query_set1 = ProjectPlannerData.objects.filter(project_name=project[0], financial_approval=True,
+                                                      procurement_approval=True)
+        return render(request, 'capacity_app/project_view_request.html',
+                    {"user_group": user_group, "email": email, "data": query_set, "query_set": query_set1})
+    else:
+        query_set = ProjectPlannerData.objects.filter(project_name=project[0])
+        return render(request, 'capacity_app/project_view_request.html',
+                      {"user_group": user_group, "email": email, "data": query_set, "query_set": "admin"})
+
 
 
 @login_required
 def financial_approval(request):
-    email = request.session["user_group"][2]
+    email = request.session["user_group"][3]
     query_set = ProjectPlannerData.objects.filter(financial_approval=False)
     return render(request, 'capacity_app/financial_approval.html', {"email": email,
                                                                     "data": query_set})
@@ -350,14 +375,14 @@ def completed_financial_approval(request, pk):
 
 @login_required
 def financial_completed_request(request):
-    email = request.session["user_group"][2]
+    email = request.session["user_group"][3]
     query_set = ProjectPlannerData.objects.filter(financial_approval=True)
     return render(request, 'capacity_app/finance_completed.html', {"email": email, "data": query_set})
 
 
 @login_required
 def procurement_approval(request):
-    email = request.session["user_group"][2]
+    email = request.session["user_group"][3]
     query_set = ProjectPlannerData.objects.filter(financial_approval=True, procurement_approval=False)
     return render(request, 'capacity_app/procurement_approval.html', {"email": email, "data": query_set})
 
@@ -371,7 +396,7 @@ def completed_procurement_approval(request, pk):
 
 @login_required
 def procurement_completed_request(request):
-    email = request.session["user_group"][2]
+    email = request.session["user_group"][3]
     query_set = ProjectPlannerData.objects.filter(procurement_approval=True)
     return render(request, 'capacity_app/procurement_completed_request.html', {"email": email, "data": query_set})
 

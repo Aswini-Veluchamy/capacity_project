@@ -114,7 +114,7 @@ td {
                                     <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                     <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
                                     <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
-                                    <th nowrap class="milestone_name" data-field="milestone_name" data-sortable="true">{{i.milestone_name}}</th>
+                                    <!--<th nowrap class="milestone_name" data-field="milestone_name" data-sortable="true">{{i.milestone_name}}</th>-->
                                     <th nowrap class="action" data-sortable="true">Action</th>
                                 </tr>
                                 </thead>
@@ -134,7 +134,7 @@ td {
                                     <td nowrap class="gravit">{{i.gravit}}</td>
                                     <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
                                     <td nowrap class="remarks">{{i.remarks}}</td>
-                                    <td nowrap class="milestone_name">{{i.date}}</td>
+                                    <!--<td nowrap class="milestone_name">{{i.date}}</td>-->
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" title="Approve Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_financial_approval' pk=i.id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
                                     </td>

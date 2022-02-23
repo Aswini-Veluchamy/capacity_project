@@ -58,10 +58,13 @@ input[type="text"] {
                 </li>
             </ul>
         </li><!-- End Components Nav -->
-
-        <li class="nav-heading">Capacity - Alpha4</li>
+{% if query_data %}
+<li class="nav-heading">Capacity - Alpha4</li>
 
         <li class="nav-item">
+
+
+
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
                 <span>Request - Alpha4</span>
@@ -87,7 +90,7 @@ input[type="text"] {
                 </li>-->
             </ul>
         </li><!-- End Components Nav -->
-
+        {% endif %}
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -126,7 +129,9 @@ input[type="text"] {
                             <label for="project" class="form-label">Select Project <sup><strong>*</strong></sup></label>
                             <select id="project" class="form-select" name="project" required>
                                 <option value="" selected="selected" disabled="disabled">Select Project</option>
-                                <option value="{{projects}}">{{projects}}</option>
+                                {% for project in projects %}
+                                <option value="{{project}}">{{project}}</option>
+                                {% endfor %}
                             </select>
                         </div>
 

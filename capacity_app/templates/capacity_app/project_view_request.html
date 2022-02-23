@@ -120,8 +120,8 @@ input[type="text"] {
             </ul>
         </li><!-- End Components Nav -->
 
+        {% if query_data == "admin" or query_data %}
         <li class="nav-heading">Capacity - Alpha4</li>
-
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -148,7 +148,7 @@ input[type="text"] {
                 </li>-->
             </ul>
         </li><!-- End Components Nav -->
-
+        {% endif %}
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -176,19 +176,19 @@ input[type="text"] {
                             <ul class="progressbar">
                                 <li class="active">Request Created</li>
 
-                                {% if data.financial_approval == True %}
+                                {% if data.0.financial_approval == True %}
                                 <li class="active">Finance Approval</li>
                                 {% else %}
                                 <li>Finance Approval</li>
                                 {% endif %}
 
-                                {% if data.procurement_approval == True %}
+                                {% if data.0.procurement_approval == True %}
                                 <li class="active">Procurement Approval</li>
                                 {% else %}
                                 <li>Procurement Approval</li>
                                 {% endif %}
 
-                                {% if data.procurement_approval == True and data.financial_approval == True%}
+                                {% if data.0.procurement_approval == True and data.0.financial_approval == True%}
                                 <li class="active">Request Completed</li>
                                 {% else %}
                                 <li>Request Completed</li>
@@ -224,69 +224,69 @@ input[type="text"] {
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="dc" class="form-label">Region</label>
-                                    <input type="text" id="dc" class="form-control" name="dc" value="{{data.data_center}}" readonly />
+                                    <input type="text" id="dc" class="form-control" name="dc" value="{{data.0.data_center}}" readonly />
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="project" class="form-label">Project</label>
-                                    <input type="text" id="project" class="form-control" name="project" value="{{data.project_name}}" readonly />
+                                    <input type="text" id="project" class="form-control" name="project" value="{{data.0.project_name}}" readonly />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="user_id" class="form-label">User ID</label>
-                                    <input type="text" class="form-control" id="user_id" name="user_id" value="{{data.user_name}}" readonly>
+                                    <input type="text" class="form-control" id="user_id" name="user_id" value="{{data.0.user_name}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
-                                    <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="{{data.std_stable1}}"  readonly>
+                                    <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="{{data.0.std_stable1}}"  readonly>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
-                                    <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="{{data.std_stable2}}" readonly>
+                                    <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="{{data.0.std_stable2}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
-                                    <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="{{data.std_arbor|floatformat}}" readonly>
+                                    <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="{{data.0.std_arbor|floatformat}}" readonly>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="stable1" class="form-label">Stable1 (TB)</label>
-                                    <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="{{data.stable1}}" readonly>
+                                    <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="{{data.0.stable1}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="stable2" class="form-label">Stable2 (TB)</label>
-                                    <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="{{data.stable2}}" readonly>
+                                    <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="{{data.0.stable2}}" readonly>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="arbor" class="form-label">Arbor (TB)</label>
-                                    <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="{{data.arbor|floatformat}}" readonly>
+                                    <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="{{data.0.arbor|floatformat}}" readonly>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="gravit" class="form-label">Gravit (TB)</label>
-                                    <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="{{data.gravit|floatformat}}" readonly>
+                                    <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="{{data.0.gravit|floatformat}}" readonly>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="remarks" class="form-label">Remarks</label>
-                                    <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" readonly>{{data.remarks}}</textarea>
+                                    <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" readonly>{{data.0.remarks}}</textarea>
                                 </div>
                             </div>
                             <br>
-                            <label class="form-label">Milestone</label>
+                            <!--<label class="form-label">Milestone</label>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <p class="form-control" readonly>{{data.milestone_name}}</p>
+                                    <p class="form-control" readonly>{{data.0.milestone_name}}</p>
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <p class="form-control" readonly>{{data.date}}</p>
+                                    <p class="form-control" readonly>{{data.0.date}}</p>
                                 </div>
-                            </div>
+                            </div>-->
                         </form>
                     </div>
                 </div>
