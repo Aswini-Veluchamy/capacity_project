@@ -92,7 +92,7 @@ def dashboard(request):
         return render(request, 'capacity_app/dashboard.html', {"user_group": user_group, "email": email, "query_data": query_set})
     else:
         return render(request, 'capacity_app/dashboard.html',
-                      {"user_group": user_group, "email": email, "query_set": "admin"})
+                      {"user_group": user_group, "email": email, "query_data": "admin"})
 
 
 
