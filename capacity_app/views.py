@@ -1,5 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -7,8 +7,6 @@ from django.contrib.auth.decorators import login_required
 from .models import CapacityData, HistoryData, ProjectPlannerData
 from datetime import datetime
 import time
-from django.core.exceptions import ObjectDoesNotExist
-
 
 def send_mail(subj, msg):
     import smtplib
