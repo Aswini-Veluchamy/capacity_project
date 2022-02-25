@@ -18,6 +18,6 @@ urlpatterns = [
     path('procurement_approval/', views.procurement_approval, name='procurement_approval'),
     path('completed_procurement_approval/<str:pk>', views.completed_procurement_approval, name='completed_procurement_approval'),
     path('procurement_completed_request/', views.procurement_completed_request, name='procurement_completed_request'),
-
-
+    path('admin_view_request/', views.admin_view_request, name='admin_view_request'),
+    path('admin_completed_request/', views.admin_completed_request, name='admin_completed_request'),
 ]

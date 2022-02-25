@@ -401,3 +401,14 @@ def procurement_completed_request(request):
     query_set = ProjectPlannerData.objects.filter(procurement_approval=True)
     return render(request, 'capacity_app/procurement_completed_request.html', {"email": email, "data": query_set})
 
+@login_required
+def admin_view_request(request):
+    email = request.session["user_group"][3]
+    data = CapacityData.objects.all()
+    return render(request, 'capacity_app/admin_view_request.html', {"email": email, "data": data})
+
+@login_required
+def admin_completed_request(request):
+    email = request.session["user_group"][3]
+    data = CapacityData.objects.all()
+    return render(request, 'capacity_app/admin_completed_request.html', {"email": email, "data": data})
