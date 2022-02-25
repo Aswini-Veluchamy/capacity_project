@@ -87,6 +87,22 @@ input[type="text"] {
     background: #3aac5d;
     color: white
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 </style>
 <body>
 <!-- ======= Sidebar ======= -->
@@ -277,8 +293,8 @@ input[type="text"] {
                                     <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" readonly>{{data.0.remarks}}</textarea>
                                 </div>
                             </div>
-                            <br>
-                            <label class="form-label">Milestone</label>
+
+                            <!--<label class="form-label">Milestone</label>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <p class="form-control" readonly>{{data.0.milestone_name}}</p>
@@ -286,6 +302,28 @@ input[type="text"] {
                                 <div class="mb-3 col-md-6">
                                     <p class="form-control" readonly>{{data.0.date}}</p>
                                 </div>
+                            </div>-->
+
+                            <div class="row">
+                            <label class="form-label">Milestone</label>
+                            <table class="table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Milestone Name</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>P1</td>
+                                    <td>24-02-2022</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" title="Edit Request"><a style="text-decoration:none;color:#fff;" href="#"><i class="fas fa-edit"></i>&nbsp;Edit</a></button>
                             </div>
                         </form>
                     </div>
@@ -294,6 +332,7 @@ input[type="text"] {
         </div>
     </section>
 </main>
+
 <script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery2.1.min.js' %}"></script>
 </body>
 {% endblock content %}
