@@ -314,9 +314,11 @@ tr:nth-child(even) {
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for i in data %}
                                 <tr>
-                                    <td>P1</td>
-                                    <td>24-02-2022</td>
+                                    <td>{{data.0.milestone_name}}</td>
+                                    <td>{{data.0.date}}</td>
+                                {% endfor %}
                                 </tr>
                                 </tbody>
                             </table>
