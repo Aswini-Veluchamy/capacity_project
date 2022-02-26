@@ -314,24 +314,24 @@ tbody {
 
                             <div class="row">
                                 <div class="mb-3 col-lg-12">
-                            <label class="form-label">Milestone</label>
-                            <table class="table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Milestone Name</th>
-                                    <th>Date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for i in data %}
-                                <tr>
-                                    <td>{{data.0.milestone_name}}</td>
-                                    <td>{{data.0.date}}</td>
-                                {% endfor %}
-                                </tr>
-                                </tbody>
-                            </table>
-                            </div>
+                                    <label class="form-label">Milestone</label>
+                                    <table class="table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Milestone Name</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in data %}
+                                        <tr>
+                                            <td>{{data.0.milestone_name}}</td>
+                                            <td>{{data.0.date}}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <br>
                             <div class="text-center">
