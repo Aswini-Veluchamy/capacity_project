@@ -54,12 +54,12 @@ td {
             </a>
             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{% url 'view_request' %}"  class="active">
+                    <a href="{% url 'admin_view_request' %}"  class="active">
                         <i class="bi bi-circle"></i><span>View Request</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'completed_ticket_data' %}">
+                    <a href="{% url 'admin_completed_request' %}">
                         <i class="bi bi-circle"></i><span>Completed Request</span>
                     </a>
                 </li>
@@ -113,7 +113,7 @@ td {
                                    data-buttons-class="primary">
                                 <thead>
                                 <tr>
-                                    <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
+                                    <th nowrap class="request_id" data-field="request_id" data-sortable="true" >ID</th>
                                     <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
                                     <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
                                     <th nowrap class="user_id" data-field="user_id" data-sortable="true" >User ID</th>
@@ -128,7 +128,8 @@ td {
                                     <th nowrap class="move_group_name" data-field="move_group_name" data-sortable="true" >Milestone</th>
                                     <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
                                     <th nowrap class="status" data-field="status" data-sortable="true" data-formatter="priceFormatter" >Status</th>
-                                    <th nowrap class="action" data-sortable="true">Actions</th>
+                                    <th nowrap class="approve" data-sortable="true">Approve</th>
+                                    <th nowrap class="reject" data-sortable="true">Reject </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -149,9 +150,19 @@ td {
                                     <td nowrap class="move_group_name">{{i.move_group_name}}</td>
                                     <td nowrap class="remarks">{{i.remarks}}</td>
                                     <td nowrap class="status">{{i.tkt_status}}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger btn-sm" title="Reject Request"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-times-circle"></i></a></button>
-                                        <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
+                                    <td nowrap class="approve">
+                                        <button type="button" class="btn btn-success btn-sm" title="Approve Request">
+                                            <a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}">
+                                                <i class="fas fa-tasks"></i>&nbsp; Approve
+                                            </a>
+                                        </button>
+                                    </td>
+                                    <td nowrap class="reject">
+                                        <button type="button" class="btn btn-danger btn-sm" title="Reject Request">
+                                            <a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}">
+                                                <i class="fas fa-times-circle"></i>&nbsp; Reject
+                                            </a>
+                                        </button>
                                     </td>
                                     {% endfor %}
                                 </tr>

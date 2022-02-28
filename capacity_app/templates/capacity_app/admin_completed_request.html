@@ -44,12 +44,12 @@ td {
             </a>
             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{% url 'view_request' %}">
+                    <a href="{% url 'admin_view_request' %}">
                         <i class="bi bi-circle"></i><span>View Request</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'completed_ticket_data' %}"  class="active">
+                    <a href="{% url 'admin_completed_request' %}"  class="active">
                         <i class="bi bi-circle"></i><span>Completed Request</span>
                     </a>
                 </li>
@@ -103,7 +103,7 @@ td {
                                    data-buttons-class="primary">
                                 <thead>
                                 <tr>
-                                    <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
+                                    <th nowrap class="request_id" data-field="request_id" data-sortable="true" >ID</th>
                                     <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
                                     <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
                                     <th nowrap class="user_id" data-field="user_id" data-sortable="true" >User ID</th>
