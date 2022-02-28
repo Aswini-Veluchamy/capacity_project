@@ -58,12 +58,10 @@ input[type="text"] {
                 </li>
             </ul>
         </li><!-- End Components Nav -->
-{% if query_data %}
-<li class="nav-heading">Capacity - Alpha4</li>
+        {% if query_data %}
+        <li class="nav-heading">Capacity - Alpha4</li>
 
         <li class="nav-item">
-
-
 
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -97,123 +95,123 @@ input[type="text"] {
 
 <main id="main" class="main">
 
-<div class="pagetitle">
-    <h1>Project Create Request</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item">Project Planner</li>
-            <li class="breadcrumb-item">Project Create Request</li>
-        </ol>
-    </nav>
-</div><!-- End Page Title -->
+    <div class="pagetitle">
+        <h1>Project Create Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item">Project Planner</li>
+                <li class="breadcrumb-item">Project Create Request</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
 
-<section class="section">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Project Create Request - Alpha4</h5>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="mb-3 col-md-6">
-                            <label for="dc" class="form-label">Select DC <sup><strong>*</strong></sup></label>
-                            <select id="dc" class="form-select" name="dc" required>
-                                <option value="" selected="selected" disabled="disabled">Select Region</option>
-                                <option value="Ash">Ash</option>
-                                <option value="Fpk">Fpk</option>
-                            </select>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Project Create Request - Alpha4</h5>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3 col-md-6">
+                                <label for="dc" class="form-label">Select DC <sup><strong>*</strong></sup></label>
+                                <select id="dc" class="form-select" name="dc" required>
+                                    <option value="" selected="selected" disabled="disabled">Select Region</option>
+                                    <option value="Ash">Ash</option>
+                                    <option value="Fpk">Fpk</option>
+                                </select>
 
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="project" class="form-label">Select Project <sup><strong>*</strong></sup></label>
-                            <select id="project" class="form-select" name="project" required>
-                                <option value="" selected="selected" disabled="disabled">Select Project</option>
-                                {% for project in projects %}
-                                <option value="{{project}}">{{project}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="project" class="form-label">Select Project <sup><strong>*</strong></sup></label>
+                                <select id="project" class="form-select" name="project" required>
+                                    <option value="" selected="selected" disabled="disabled">Select Project</option>
+                                    {% for project in projects %}
+                                    <option value="{{project}}">{{project}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label for="user_id" class="form-label">User ID <sup><strong>*</strong></sup></label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" value="{{request.user.username}}" readonly>
-                        </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="user_id" class="form-label">User ID <sup><strong>*</strong></sup></label>
+                                <input type="text" class="form-control" id="user_id" name="user_id" value="{{request.user.username}}" readonly>
+                            </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label for="vol_type" class="form-label">Volume Type <sup><strong>*</strong></sup></label>
-                            <select id="vol_type" class="form-select" name="vol_type" required>
-                                <option value="" selected="selected" disabled="disabled">Select Volume Type</option>
-                                <option value="option1">Std Stable1</option>
-                                <option value="option2">Std Stable2</option>
-                                <option value="option3">Std Arbor</option>
-                                <option value="option4">Stable1</option>
-                                <option value="option5">Stable2</option>
-                                <option value="option6">Arbor</option>
-                                <option value="option7">Gravit</option>
-                            </select>
-                        </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="vol_type" class="form-label">Volume Type <sup><strong>*</strong></sup></label>
+                                <select id="vol_type" class="form-select" name="vol_type" required>
+                                    <option value="" selected="selected" disabled="disabled">Select Volume Type</option>
+                                    <option value="option1">Std Stable1</option>
+                                    <option value="option2">Std Stable2</option>
+                                    <option value="option3">Std Arbor</option>
+                                    <option value="option4">Stable1</option>
+                                    <option value="option5">Stable2</option>
+                                    <option value="option6">Arbor</option>
+                                    <option value="option7">Gravit</option>
+                                </select>
+                            </div>
 
-                        <div class="mb-3 col-md-6 vol_type" id="option1">
-                            <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
-                            <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="0" required>
-                        </div>
+                            <div class="mb-3 col-md-6 vol_type" id="option1">
+                                <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
+                                <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="0" required>
+                            </div>
 
-                        <div class="mb-3 col-md-6 vol_type" id="option2">
-                            <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
-                            <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="0" required>
-                        </div>
-                        <div class="mb-3 col-md-6 vol_type" id="option3">
-                            <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
-                            <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="0" required>
-                        </div>
+                            <div class="mb-3 col-md-6 vol_type" id="option2">
+                                <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
+                                <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6 vol_type" id="option3">
+                                <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
+                                <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="0" required>
+                            </div>
 
-                        <div class="mb-3 col-md-6 vol_type" id="option4">
-                            <label for="stable1" class="form-label">Stable1 (TB)</label>
-                            <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="0" required>
-                        </div>
-                        <div class="mb-3 col-md-6 vol_type" id="option5">
-                            <label for="stable2" class="form-label">Stable2 (TB)</label>
-                            <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="0" required>
-                        </div>
+                            <div class="mb-3 col-md-6 vol_type" id="option4">
+                                <label for="stable1" class="form-label">Stable1 (TB)</label>
+                                <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6 vol_type" id="option5">
+                                <label for="stable2" class="form-label">Stable2 (TB)</label>
+                                <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="0" required>
+                            </div>
 
-                        <div class="mb-3 col-md-6 vol_type" id="option6">
-                            <label for="arbor" class="form-label">Arbor (TB)</label>
-                            <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="0" required>
-                        </div>
-                        <div class="mb-3 col-md-6 vol_type" id="option7">
-                            <label for="gravit" class="form-label">Gravit (TB)</label>
-                            <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="0" required>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="remarks" class="form-label">Remarks <sup><strong>*</strong></sup></label>
-                            <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
-                        </div>
-                        <div class="input_fields_wrap">
-                            <button class="add_field_button btn btn-info" style="float:right;">Add Milestone</button><br>
-                            <label class="form-label">Milestone <sup><strong>*</strong></sup></label>
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <input type="text" class="form-control" id="mile" name="mytext[]" autocomplete="off" required>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <input type="date" class="form-control" placeholder="start date" id="startdate" autocomplete="off" name="mytext2[]" required/>
+                            <div class="mb-3 col-md-6 vol_type" id="option6">
+                                <label for="arbor" class="form-label">Arbor (TB)</label>
+                                <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6 vol_type" id="option7">
+                                <label for="gravit" class="form-label">Gravit (TB)</label>
+                                <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="0" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="remarks" class="form-label">Remarks <sup><strong>*</strong></sup></label>
+                                <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
+                            </div>
+                            <div class="input_fields_wrap">
+                                <button class="add_field_button btn btn-info" style="float:right;">Add Milestone</button><br>
+                                <label class="form-label">Milestone <sup><strong>*</strong></sup></label>
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <input type="text" class="form-control" id="mile" name="mytext[]" autocomplete="off" required>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <input type="date" class="form-control" placeholder="start date" id="startdate" autocomplete="off" name="mytext2[]" required/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="text-center">
-                            <p>{{error}}</p>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{% url 'view_request' %} " class="btn btn-primary" role="button">Cancel</a>
-                        </div>
-                    </form>
+                            <br>
+                            <div class="text-center">
+                                <p>{{error}}</p>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{% url 'view_request' %} " class="btn btn-primary" role="button">Cancel</a>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </main><!-- End #main -->
 <script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
 
