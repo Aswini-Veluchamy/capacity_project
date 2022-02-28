@@ -88,25 +88,25 @@ input[type="text"] {
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
-<div class="pagetitle">
-    <h1>Create Request</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item">Request - Alpha4</li>
-            <li class="breadcrumb-item">Create Request</li>
-        </ol>
-    </nav>
-</div><!-- End Page Title -->
+    <div class="pagetitle">
+        <h1>Create Request</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item">Request - Alpha4</li>
+                <li class="breadcrumb-item">Create Request</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
 
-<section class="section">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Create Request - Alpha4</h5>
-                    <form method="POST">
-                        {% csrf_token %}
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Create Request - Alpha4</h5>
+                        <form method="POST">
+                            {% csrf_token %}
                             <div class="mb-3 col-md-6">
                                 <label for="dc" class="form-label">Select DC <sup><strong>*</strong></sup></label>
                                 <select id="dc" class="form-select" name="dc" required>
@@ -190,19 +190,19 @@ input[type="text"] {
                                 <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" required></textarea>
                             </div>
 
-                        <br>
-                        <div class="text-center">
-                            <p>{{error}}</p>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{% url 'view_request' %} " class="btn btn-primary" role="button">Cancel</a>
-                        </div>
-                    </form>
+                            <br>
+                            <div class="text-center">
+                                <p>{{error}}</p>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{% url 'view_request' %} " class="btn btn-primary" role="button">Cancel</a>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </main>
 <script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
 
