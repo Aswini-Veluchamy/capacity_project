@@ -73,3 +73,15 @@ class HistoryData(models.Model):
 
     class Meta:
         db_table = "history_capacity_data"
+
+
+class MilestoneData(models.Model):
+    name = models.CharField(max_length=255)
+    date = models.CharField(max_length=255)
+    project_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "milestone_data"

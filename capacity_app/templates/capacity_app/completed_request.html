@@ -39,7 +39,7 @@ td {
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
-
+        {% if "admin" not in user_group %}
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i>
@@ -59,7 +59,7 @@ td {
                 </li>
             </ul>
         </li><!-- End Components Nav -->
-
+        {% endif %}
         <li class="nav-heading">Capacity - Alpha4</li>
 
         <li class="nav-item">
@@ -69,7 +69,7 @@ td {
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-                {% if user_group != "admin" %}
+                {% if "admin" not in user_group %}
                 <li>
                     <a href="{% url 'create_request' %}">
                         <i class="bi bi-circle"></i><span>Create Request</span>

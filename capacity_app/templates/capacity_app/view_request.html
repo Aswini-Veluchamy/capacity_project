@@ -49,7 +49,7 @@ td {
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
-
+        {% if "admin" not in user_group %}
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i>
@@ -64,6 +64,7 @@ td {
                 </li>
             </ul>
         </li><!-- End Components Nav -->
+        {% endif %}
 
         <li class="nav-heading">Capacity - Alpha4</li>
 
@@ -74,7 +75,7 @@ td {
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-                {% if user_group != "admin" %}
+                {% if "admin" not in user_group %}
                 <li>
                     <a href="{% url 'create_request' %}">
                         <i class="bi bi-circle"></i><span>Create Request</span>
@@ -176,13 +177,12 @@ td {
                                     <td nowrap class="move_group_name">{{i.move_group_name}}</td>
                                     <td nowrap class="remarks">{{i.remarks}}</td>
                                     <td nowrap class="status">{{i.tkt_status}}</td>
-                                    <!--<td>
-                                        {% if user_group != "admin" %}
-                                        <button type="button" class="btn btn-danger btn-sm" title="Edit Request"><a style="text-decoration:none;color:#fff;" href="{% url 'update_request' pk=i.request_id %}"><i class="fas fa-edit"></i></a></button>
-                                        {% elif user_group == "admin" %}
-                                        <button type="button" class="btn btn-success btn-sm" title="Complete Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
-                                        {% endif %}
-                                    </td>-->
+<!--                                    <<td>-->
+<!--                                        {% if "admin" in user_group %}-->
+<!--                                        <button type="button" class="btn btn-success btn-sm" title="Reject"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>-->
+<!--                                        <button type="button" class="btn btn-success btn-sm" title="Complete"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>-->
+<!--                                        {% endif %}-->
+<!--                                    </td>-->
                                     {% endfor %}
                                 </tr>
                                 </tbody>

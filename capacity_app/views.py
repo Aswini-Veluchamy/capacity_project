@@ -4,9 +4,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import CapacityData, HistoryData, ProjectPlannerData
+from .models import CapacityData, HistoryData, ProjectPlannerData, MilestoneData
 from datetime import datetime
 import time
+from django.db.models import Q
+
 
 def send_mail(subj, msg):
     import smtplib
@@ -42,7 +44,8 @@ def user_login(request):
             email = user1.email
             group = request.user.groups.all()
 
-            projects = [i.name for i in group if "User_Group" not in i.name]
+            projects = [i.name for i in group if i.name not in ["User_Group_Project_Planner", 'User_Group_Finance',
+                                                                'User_Group_procurement', "admin", "member"]]
 
             user_groups = [i.name for i in group if i.name in ["User_Group_Project_Planner", 'User_Group_Finance',
                                                                'User_Group_procurement', "admin", "member"]]
@@ -57,6 +60,9 @@ def user_login(request):
 
             elif 'User_Group_procurement' in user_groups:
                 return HttpResponseRedirect(reverse("procurement_approval"))
+
+            elif 'admin' in user_groups:
+                return HttpResponseRedirect(reverse("admin_view_request"))
 
             '''redirecting to dashboard page'''
             return HttpResponseRedirect(reverse("dashboard"))
@@ -142,8 +148,9 @@ def create_request(request):
         request_data_create.save()
         return HttpResponseRedirect(reverse("view_request"))
     else:
+        mile_stone_data = MilestoneData.objects.filter(project_name=projects[0])
         return render(request, 'capacity_app/create_request.html', {"user_group": user_group, "projects": projects,
-                                                                    "email": email})
+                                                                    "email": email,"milestone": mile_stone_data})
 
 
 @csrf_exempt
@@ -152,16 +159,11 @@ def view_request(request):
     """render all request to the front end"""
     user_group = request.session["user_group"][0]
     user_name = request.session["user_group"][2]
-    email = request.session["user_group"][2]
-    if user_group == "admin":
-        data = CapacityData.objects.all()
-        #send_mail("test-subject", "test-working")
-        return render(request, 'capacity_app/view_request.html', {'data': data,
-                                                                  "user_group": user_group, "email": email})
-    else:
-        data = CapacityData.objects.filter(user_id=str(user_name))
+    email = request.session["user_group"][3]
 
-        return render(request, 'capacity_app/view_request.html', {'data': data,
+    data = CapacityData.objects.filter(user_id=str(user_name))
+
+    return render(request, 'capacity_app/view_request.html', {'data': data,
                                                                   "user_group": user_group, "email": email})
 
 
@@ -226,6 +228,7 @@ def update_request(request, pk):
 @login_required
 def completed_request(request, pk):
     """ fetch the record the table based on pk"""
+    user_group = request.session["user_group"][0]
     data = CapacityData.objects.get(pk=pk)
 
     closed_date = datetime.now()
@@ -251,7 +254,47 @@ def completed_request(request, pk):
     time.sleep(1)
     '''after updating into history table deleting record from capacity table'''
     data.delete()
-    return HttpResponseRedirect(reverse("view_request"))
+    if "admin" in user_group:
+        return HttpResponseRedirect(reverse("admin_view_request"))
+    else:
+        return HttpResponseRedirect(reverse("view_request"))
+
+
+@csrf_exempt
+@login_required
+def reject_request(request, pk):
+    """ fetch the record the table based on pk"""
+    user_group = request.session["user_group"][0]
+    data = CapacityData.objects.get(pk=pk)
+
+    closed_date = datetime.now()
+    ''' create updated ticket data in history table'''
+    history_data_create = HistoryData.objects.create(
+        request_id=data.request_id,
+        updated_time=closed_date,
+        data_center=data.data_center,
+        project_name=data.project_name,
+        user_id=data.user_id,
+        std_stable_1=data.std_stable_1,
+        std_stable_2=data.std_stable_2,
+        std_arbor=data.std_arbor,
+        stable_1=data.stable_1,
+        stable_2=data.stable_2,
+        arbor=data.arbor,
+        gravit=data.gravit,
+        move_group_name=data.move_group_name,
+        remarks=data.remarks,
+        tkt_status="Rejected",
+    )
+    history_data_create.save()  # saving the record in the table
+    time.sleep(1)
+    '''after updating into history table deleting record from capacity table'''
+    data.delete()
+
+    if "admin" in user_group:
+        return HttpResponseRedirect(reverse("admin_view_request"))
+    else:
+        return HttpResponseRedirect(reverse("view_request"))
 
 
 @login_required
@@ -266,15 +309,11 @@ def history_request(request, id):
 @login_required
 def completeticketdata(request):
     user_group = request.session["user_group"][0]
-    user_name = request.session["user_group"][1]
+    user_name = request.session["user_group"][2]
     email = request.session["user_group"][3]
-    if user_group == "admin":
-        data = HistoryData.objects.filter(tkt_status="Completed")
-        return render(request, 'capacity_app/completed_request.html', {"data": data, "user_group": user_group,
-                                                                       "email": email})
-    else:
-        data = HistoryData.objects.filter(user_id=user_name, tkt_status="Completed")
-        return render(request, 'capacity_app/completed_request.html', {"data": data, "user_group": user_group,
+
+    data = HistoryData.objects.filter(user_id=user_name)
+    return render(request, 'capacity_app/completed_request.html', {"data": data, "user_group": user_group,
                                                                        "email": email})
 
 
@@ -287,7 +326,7 @@ def project_create_request(request):
         project_name = request.POST['project']
         user_id = request.POST['user_id']
         milestone_name = request.POST.getlist('mytext[]')
-        date = request.POST.getlist('mytext2[]')
+        milestone_date = request.POST.getlist('mytext2[]')
         std_stable1 = request.POST['std_stable1']
         std_stable2 = request.POST['std_stable2']
         std_arbor = request.POST['std_arbor']
@@ -303,7 +342,7 @@ def project_create_request(request):
             project_name=project_name,
             user_name=user_id,
             milestone_name=str(milestone_name),
-            date=date,
+            date=milestone_date,
             std_stable1=int(std_stable1),
             std_stable2=int(std_stable2),
             std_arbor=int(std_arbor),
@@ -316,6 +355,16 @@ def project_create_request(request):
             procurement_approval=False
         )
         query_data.save()
+
+        # # storing milestone data
+        for i in range(len(milestone_name)):
+            milestone_data = MilestoneData.objects.create(
+                name=milestone_name[i],
+                date=milestone_date[i],
+                project_name=project_name
+            )
+            milestone_data.save()
+
         return HttpResponseRedirect(reverse("project_view_request"))
 
     else:
@@ -335,26 +384,23 @@ def project_create_request(request):
                 pass
 
 
-
 @csrf_exempt
 @login_required
 def project_view_request(request):
     user_group = request.session["user_group"][0]
     email = request.session["user_group"][3]
     project = request.session["user_group"][1]
+    print(project)
 
     if "admin" not in user_group:
         query_set = ProjectPlannerData.objects.filter(project_name=project[0])
-        print(query_set[0].project_name)
         query_set1 = ProjectPlannerData.objects.filter(project_name=project[0], financial_approval=True,
-                                                      procurement_approval=True)
-        return render(request, 'capacity_app/project_view_request.html',
-                    {"user_group": user_group, "email": email, "data": query_set, "query_data": query_set1})
-    else:
-        query_set = ProjectPlannerData.objects.filter(project_name=project[0])
-        return render(request, 'capacity_app/project_view_request.html',
-                      {"user_group": user_group, "email": email, "data": query_set, "query_data": "admin"})
+                                                       procurement_approval=True)
 
+        mile_stone_data = MilestoneData.objects.filter(project_name=project[0])
+        return render(request, 'capacity_app/project_view_request.html',
+                    {"user_group": user_group, "email": email, "data": query_set, "query_data": query_set1,
+                     "mile_stone": mile_stone_data})
 
 
 @login_required
@@ -399,14 +445,17 @@ def procurement_completed_request(request):
     query_set = ProjectPlannerData.objects.filter(procurement_approval=True)
     return render(request, 'capacity_app/procurement_completed_request.html', {"email": email, "data": query_set})
 
+
 @login_required
 def admin_view_request(request):
     email = request.session["user_group"][3]
     data = CapacityData.objects.all()
+    print(data,"======================")
     return render(request, 'capacity_app/admin_view_request.html', {"email": email, "data": data})
+
 
 @login_required
 def admin_completed_request(request):
     email = request.session["user_group"][3]
-    data = CapacityData.objects.all()
+    data = HistoryData.objects.all()
     return render(request, 'capacity_app/admin_completed_request.html', {"email": email, "data": data})
