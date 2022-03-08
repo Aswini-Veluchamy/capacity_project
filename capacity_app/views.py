@@ -413,7 +413,7 @@ def financial_approval(request):
 
 @login_required
 def completed_financial_approval(request, pk):
-    ''' updating the new vales in table '''
+    """ updating the new vales in table """
     ProjectPlannerData.objects.filter(pk=pk).update(financial_approval=True)
     return HttpResponseRedirect(reverse("financial_completed_request"))
 
@@ -434,7 +434,7 @@ def procurement_approval(request):
 
 @login_required
 def completed_procurement_approval(request, pk):
-    ''' updating the new vales in table '''
+    """ updating the new vales in table """
     ProjectPlannerData.objects.filter(pk=pk).update(procurement_approval=True)
     return HttpResponseRedirect(reverse("procurement_completed_request"))
 
@@ -450,7 +450,6 @@ def procurement_completed_request(request):
 def admin_view_request(request):
     email = request.session["user_group"][3]
     data = CapacityData.objects.all()
-    print(data,"======================")
     return render(request, 'capacity_app/admin_view_request.html', {"email": email, "data": data})
 
 
