@@ -1,10 +1,10 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import CapacityData, HistoryData, ProjectPlannerData, MilestoneData
+from .models import CapacityData, HistoryData, ProjectPlannerData, MilestoneData, ProjectPlannerHistoryData, FinanceProcurementApprovalData
 from datetime import datetime
 import time
 from django.db.models import Q
@@ -169,7 +169,8 @@ def view_request(request):
 
 @csrf_exempt
 @login_required
-def update_request(request, pk):
+def update_project_planner_request(request, pk):
+    project = request.session["user_group"][1]
 
     if request.method == "POST":
         std_stable1 = request.POST.get('std_stable1', None)
@@ -181,47 +182,54 @@ def update_request(request, pk):
         gravit = request.POST.get('gravit', None)
         remarks = request.POST.get('remarks', None)
 
-        ''' fetch the record the table based on pk'''
-        data = CapacityData.objects.get(pk=pk)
+        data = ProjectPlannerData.objects.get(pk=pk)
 
-        ''' create updated ticket data in history table'''
-        history_data_create = HistoryData.objects.create(
-            request_id=data.request_id,
-            updated_time=data.updated_time,
-            data_center=data.data_center,
-            project_name=data.project_name,
-            user_id=data.user_id,
-            std_stable_1=data.std_stable_1,
-            std_stable_2=data.std_stable_2,
-            std_arbor=data.std_arbor,
-            stable_1=data.stable_1,
-            stable_2=data.stable_2,
-            arbor=data.arbor,
-            gravit=data.gravit,
-            move_group_name=data.move_group_name,
-            remarks=data.remarks,
-            tkt_status=data.tkt_status,
-        )
-        history_data_create.save()  # saving the record in the table
+        if (int(std_stable1) >= data.std_stable1) and (int(std_stable2) >= data.std_stable2) and (int(std_arbor) >= data.std_arbor) and (int(stable1) >= data.stable1) and (int(stable2) >= data.stable2) and (int(arbor) >= data.arbor) and (int(gravit) >= data.gravit):
+            ''' create updated ticket data in history table'''
+            history_data_create = ProjectPlannerHistoryData.objects.create(
+                data_center=data.data_center,
+                project_name=data.project_name,
+                user_name=data.user_name,
+                milestone_name=data.milestone_name,
+                date=data.date,
+                std_stable1=data.std_stable1,
+                std_stable2=data.std_stable2,
+                std_arbor=data.std_arbor,
+                stable1=data.stable1,
+                stable2=data.stable2,
+                arbor=data.arbor,
+                gravit=data.gravit,
+                remarks=data.remarks,
+                financial_approval=data.financial_approval,
+                procurement_approval=data.procurement_approval,
+                created_at=data.created_at
+            )
+            history_data_create.save()  # saving the record in the table
 
-        updated_at = datetime.now()
-        ''' updating the new vales in table '''
-        CapacityData.objects.filter(pk=pk).update(std_stable_1=std_stable1,
-                                                  std_stable_2=std_stable2,
-                                                  std_arbor=std_arbor,
-                                                  stable_1=stable1,
-                                                  stable_2=stable2,
-                                                  arbor=arbor,
-                                                  gravit=gravit,
-                                                  remarks=remarks,
-                                                  updated_time=updated_at)
-        return HttpResponseRedirect(reverse("view_request"))
+            updated_at = datetime.now()
+            ''' updating the new vales in table '''
+            ProjectPlannerData.objects.filter(pk=pk).update(std_stable1=std_stable1,
+                                                            std_stable2=std_stable2,
+                                                            std_arbor=std_arbor,
+                                                            stable1=stable1,
+                                                            stable2=stable2,
+                                                            arbor=arbor,
+                                                            gravit=gravit,
+                                                            remarks=remarks,
+                                                            created_at=updated_at,
+                                                            financial_approval=False,
+                                                            procurement_approval=False)
+            return HttpResponseRedirect(reverse("project_view_request"))
+
+        else:
+            return HttpResponse("please provide greater values!!!!!")
     else:
-        data = CapacityData.objects.get(pk=pk)
+        data = ProjectPlannerData.objects.get(pk=pk)
         user_group = request.session["user_group"][0]
         email = request.session["user_group"][3]
+        mile_stone_data = MilestoneData.objects.filter(project_name=project[0])
         return render(request, 'capacity_app/update_request.html', {"data": data, "user_group": user_group,
-                                                                    "email": email})
+                                                                    "email": email, "mile_stone": mile_stone_data})
 
 
 @csrf_exempt
@@ -298,10 +306,11 @@ def reject_request(request, pk):
 
 
 @login_required
-def history_request(request, id):
+def history_request(request):
     user_group = request.session["user_group"][0]
+    project = request.session["user_group"][1]
     email = request.session["user_group"][3]
-    data = HistoryData.objects.filter(request_id=id)
+    data = ProjectPlannerHistoryData.objects.filter(project_name=project[0])
     return render(request, 'capacity_app/history_request.html', {"data": data, "user_group": user_group,
                                                                  "email": email})
 
@@ -390,7 +399,6 @@ def project_view_request(request):
     user_group = request.session["user_group"][0]
     email = request.session["user_group"][3]
     project = request.session["user_group"][1]
-    print(project)
 
     if "admin" not in user_group:
         query_set = ProjectPlannerData.objects.filter(project_name=project[0])
@@ -413,15 +421,38 @@ def financial_approval(request):
 
 @login_required
 def completed_financial_approval(request, pk):
+
+    """ storing approved record in table"""
+    data = ProjectPlannerData.objects.get(pk=pk)
+
+    create_record = FinanceProcurementApprovalData.objects.create(
+        data_center=data.data_center,
+        project_name=data.project_name,
+        group="finance",
+        milestone_name=data.milestone_name,
+        date=data.date,
+        std_stable1=data.std_stable1,
+        std_stable2=data.std_stable2,
+        std_arbor=data.std_arbor,
+        stable1=data.stable1,
+        stable2=data.stable2,
+        arbor=data.arbor,
+        gravit=data.gravit,
+        remarks=data.remarks,
+        user_name=data.user_name
+    )
+    create_record.save()
+
     """ updating the new vales in table """
     ProjectPlannerData.objects.filter(pk=pk).update(financial_approval=True)
+
     return HttpResponseRedirect(reverse("financial_completed_request"))
 
 
 @login_required
 def financial_completed_request(request):
     email = request.session["user_group"][3]
-    query_set = ProjectPlannerData.objects.filter(financial_approval=True)
+    query_set = FinanceProcurementApprovalData.objects.filter(group="finance")
     return render(request, 'capacity_app/finance_completed.html', {"email": email, "data": query_set})
 
 
@@ -434,15 +465,38 @@ def procurement_approval(request):
 
 @login_required
 def completed_procurement_approval(request, pk):
+    data = ProjectPlannerData.objects.get(pk=pk)
+
+    """ storing approved record in table"""
+
+    create_record = FinanceProcurementApprovalData.objects.create(
+        data_center=data.data_center,
+        project_name=data.project_name,
+        group="procurement",
+        milestone_name=data.milestone_name,
+        date=data.date,
+        std_stable1=data.std_stable1,
+        std_stable2=data.std_stable2,
+        std_arbor=data.std_arbor,
+        stable1=data.stable1,
+        stable2=data.stable2,
+        arbor=data.arbor,
+        gravit=data.gravit,
+        remarks=data.remarks,
+        user_name=data.user_name
+    )
+    create_record.save()
+
     """ updating the new vales in table """
     ProjectPlannerData.objects.filter(pk=pk).update(procurement_approval=True)
+
     return HttpResponseRedirect(reverse("procurement_completed_request"))
 
 
 @login_required
 def procurement_completed_request(request):
     email = request.session["user_group"][3]
-    query_set = ProjectPlannerData.objects.filter(procurement_approval=True)
+    query_set = FinanceProcurementApprovalData.objects.filter(group="procurement")
     return render(request, 'capacity_app/procurement_completed_request.html', {"email": email, "data": query_set})
 
 

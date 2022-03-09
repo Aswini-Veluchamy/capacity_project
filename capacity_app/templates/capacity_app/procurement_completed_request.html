@@ -75,7 +75,6 @@ td {
                         <font size="2" face = "futura,helvetica">
                             <table class="table table-bordered table-striped" id="example"
                                    data-toggle="table"
-                                   data-card-view="true"
                                    data-pagination="true"
                                    data-search="true"
                                    data-show-columns="false"
@@ -93,7 +92,7 @@ td {
                                    data-pagination-next-text="Next"
                                    data-pagination-h-align="left"
                                    data-pagination-detail-h-align="right"
-                                   data-page-size="1"
+                                   data-page-size="10"
                                    data-page-list="[20, 30, 40, 50, All]"
                                    data-buttons-class="primary">
                                 <thead>
@@ -128,7 +127,7 @@ td {
                                     <td nowrap class="stable2">{{i.stable2|floatformat}}</td>
                                     <td nowrap class="arbor">{{i.arbor|floatformat}}</td>
                                     <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
-                                    <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
+                                    <td nowrap class="updated_at">{{i.approved_at|date:'Y-m-d H:m:s'}}</td>
                                     <td nowrap class="remarks">{{i.remarks}}</td>
                                     <td nowrap class="action">Completed</td>
                                     {% endfor %}

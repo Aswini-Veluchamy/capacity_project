@@ -266,7 +266,9 @@ tbody {
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Request Id - </label>
-                                    <td nowrap class="id"><a href="#" style="text-decoration:underline;">{{data.0.id}}</a></td>
+                                    <td nowrap class="id">
+                                         <a href="{% url 'history_request' %}" style="text-decoration:underline;">{{data.0.id}}</a>
+                                    </td>
                                 </div>
                             </div>
                             <div class="row">
@@ -358,7 +360,7 @@ tbody {
                             {% if data.0.procurement_approval == True and data.0.financial_approval == True and "User_Group_Project_Planner" in user_group %}
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary" title="Edit Request">
-                                    <a style="text-decoration:none;color:#fff;" href="#"><i class="fas fa-edit"></i>&nbsp;Edit</a></button>
+                                    <a style="text-decoration:none;color:#fff;" href="{% url 'update_project_planner_request' pk=data.0.id %}"><i class="fas fa-edit"></i>&nbsp;Edit</a></button>
                             </div>
                             {% endif %}
                         </form>
