@@ -261,98 +261,107 @@ tbody {
                         </div>-->
                         <br><br><br><br>
                         <!-- progress bar end -->
-
-                        <font size="2" face = "futura,helvetica">
-                            <table class="table table-bordered table-striped" id="example"
-                                   data-toggle="table"
-                                   data-card-view="true"
-                                   data-pagination="true"
-                                   data-search="true"
-                                   data-show-columns="false"
-                                   data-show-toggle="false"
-                                   data-show-columns-toggle-all="false"
-                                   data-show-export="true"
-                                   data-export-data-type="all"
-                                   data-response-handler="responseHandler"
-                                   data-show-fullscreen="true"
-                                   data-show-pagination-switch="false"
-                                   data-height="650"
-                                   data-sort-name="updated_at"
-                                   data-sort-order="desc"
-                                   data-pagination-pre-text="Previous"
-                                   data-pagination-next-text="Next"
-                                   data-pagination-h-align="left"
-                                   data-pagination-detail-h-align="right"
-                                   data-page-size="1"
-                                   data-page-list="[20, 30, 40, 50, All]"
-                                   data-buttons-class="primary">
-                                <thead>
-                                <tr>
-                                    <th nowrap class="id" data-field="id" data-sortable="true" >ID</th>
-                                    <th nowrap class="dc" data-field="dc" data-sortable="true" >DC</th>
-                                    <th nowrap class="project_name" data-field="project_name" data-sortable="true" >Project Name</th>
-                                    <th nowrap class="user_id" data-field="user_id" data-sortable="true" >User ID</th>
-                                    <th nowrap class="std_stable1" data-field="std_stable1" data-sortable="true" >Std Stable1 (TB)</th>
-                                    <th nowrap class="std_stable2" data-field="std_stable2" data-sortable="true" >Std Stable2 (TB)</th>
-                                    <th nowrap class="std_arbor" data-field="std_arbor" data-sortable="true" >Std Arbor (TB)</th>
-                                    <th nowrap class="stable1" data-field="stable1" data-sortable="true" >Stable1 (TB)</th>
-                                    <th nowrap class="stable2" data-field="stable2" data-sortable="true" >Stable2 (TB)</th>
-                                    <th nowrap class="arbor" data-field="arbor" data-sortable="true" >Arbor (TB)</th>
-                                    <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
-                                    <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
-                                    <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
-                                    <th nowrap class="milestone" data-field="milestone" data-sortable="milestone">Milestone</th>
-                                    <th nowrap class="milestone_date" data-field="milestone_date" data-sortable="milestone_date">Date</th>
-                                    <th nowrap class="action" data-sortable="true">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td nowrap class="id">{{data.0.id}}</td>
-                                    <td nowrap class="dc">{{data.0.data_center}}</td>
-                                    <td nowrap class="project_name">{{data.0.project_name}}</td>
-                                    <td nowrap class="user_id">{{data.0.user_name}}</td>
-                                    <td nowrap class="std_stable1">{{data.0.std_stable1}}</td>
-                                    <td nowrap class="std_stable2">{{data.0.std_stable2|floatformat}}</td>
-                                    <td nowrap class="std_arbor">{{data.0.std_arbor|floatformat}}</td>
-                                    <td nowrap class="stable1">{{data.0.stable1|floatformat}}</td>
-                                    <td nowrap class="stable2">{{data.0.stable2|floatformat}}</td>
-                                    <td nowrap class="arbor">{{data.0.arbor|floatformat}}</td>
-                                    <td nowrap class="gravit">{{data.0.gravit|floatformat}}</td>
-                                    <td nowrap class="updated_at">{{data.0.created_at|date:'Y-m-d H:i:s'}}</td>
-                                    <td nowrap class="remarks">{{data.0.remarks}}</td>
-                                    <td nowrap class="milestone">milestone</td>
-                                    <td nowrap class="milestone_date">date</td>
-                                    {% if data.0.procurement_approval == True and data.0.financial_approval == True and "User_Group_Project_Planner" in user_group %}
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" title="Edit Request">
-                                            <a style="text-decoration:none;color:#fff;" href="#">
-                                                <i class="fas fa-edit"></i>&nbsp;Edit</a>
-                                        </button>
-                                    </td>
-                                    {% endif %}
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="mb-3 col-md-6">
-                                <table class="table-bordered">
-                                    <thead>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Request Id - </label>
+                                    <td nowrap class="id"><a href="#" style="text-decoration:underline;">{{data.0.id}}</a></td>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="dc" class="form-label">Region</label>
+                                    <input type="text" id="dc" class="form-control" name="dc" value="{{data.0.data_center}}" readonly />
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="project" class="form-label">Project</label>
+                                    <input type="text" id="project" class="form-control" name="project" value="{{data.0.project_name}}" readonly />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="user_id" class="form-label">User ID</label>
+                                    <input type="text" class="form-control" id="user_id" name="user_id" value="{{data.0.user_name}}" readonly>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="std_stable1" class="form-label">Std Stable1 (TB)</label>
+                                    <input type="number" class="form-control" id="std_stable1" name="std_stable1" min="0" max="500" value="{{data.0.std_stable1}}"  readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="std_stable2" class="form-label">Std Stable2 (TB)</label>
+                                    <input type="number" class="form-control" id="std_stable2" name="std_stable2" min="0" max="500" value="{{data.0.std_stable2}}" readonly>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="std_arbor" class="form-label">Std Arbor (TB)</label>
+                                    <input type="number" class="form-control" id="std_arbor" name="std_arbor" min="0" max="500" value="{{data.0.std_arbor|floatformat}}" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="stable1" class="form-label">Stable1 (TB)</label>
+                                    <input type="number" class="form-control" id="stable1" name="stable1" min="0" max="500" value="{{data.0.stable1}}" readonly>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="stable2" class="form-label">Stable2 (TB)</label>
+                                    <input type="number" class="form-control" id="stable2" name="stable2" min="0" max="500" value="{{data.0.stable2}}" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="arbor" class="form-label">Arbor (TB)</label>
+                                    <input type="number" class="form-control" id="arbor" name="arbor" min="0" max="500" value="{{data.0.arbor|floatformat}}" readonly>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="gravit" class="form-label">Gravit (TB)</label>
+                                    <input type="number" class="form-control" id="gravit" name="gravit" min="0" max="500" value="{{data.0.gravit|floatformat}}" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="remarks" class="form-label">Remarks</label>
+                                    <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks" readonly>{{data.0.remarks}}</textarea>
+                                </div>
+                                <!--<label class="form-label">Milestone</label>
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <p class="form-control" readonly>{{data.0.milestone_name}}</p>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <p class="form-control" readonly>{{data.0.date}}</p>
+                                    </div>
+                                </div>-->
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Milestones</label>
+                                    <table class="table-bordered">
+                                        <thead>
                                         <tr>
                                             <th>Milestone</th>
                                             <th>Date</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         {% for i in mile_stone %}
                                         <tr>
                                             <td>{{i.name}}</td>
                                             <td>{{i.date}}</td>
                                             {% endfor %}
                                         </tr>
-                                    </tbody>
-                                </table>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </font>
+                            <br>
+                            {% if data.0.procurement_approval == True and data.0.financial_approval == True and "User_Group_Project_Planner" in user_group %}
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" title="Edit Request">
+                                    <a style="text-decoration:none;color:#fff;" href="#"><i class="fas fa-edit"></i>&nbsp;Edit</a></button>
+                            </div>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
             </div>
