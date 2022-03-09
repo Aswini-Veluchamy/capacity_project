@@ -48,7 +48,7 @@ input[type="text"] {
                         {% csrf_token %}
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label for="dc" class="form-label">Region</label>
+                                <label for="dc" class="form-label">DC</label>
                                 <input type="text" id="dc" class="form-control" name="dc" value="{{data.data_center}}" readonly />
                             </div>
                             <div class="mb-3 col-md-6">
@@ -98,19 +98,34 @@ input[type="text"] {
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <label for="move_group_name" class="form-label">Move Group Name</label>
-                                <input type="text" class="form-control" id="move_group_name" name="move_group_name" min="0" max="500" value="{{data.move_group_name}}" readonly>
-                            </div>
-                            <div class="mb-3 col-md-6">
                                 <label for="remarks" class="form-label">Remarks</label>
                                 <textarea id="remarks" maxlength="256" rows="4" cols="50" class="form-control" name="remarks">{{data.remarks}}</textarea>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Milestones</label>
+                                <table class="table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Milestone</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in mile_stone %}
+                                    <tr>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.date}}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <br>
                         <div class="text-center">
                             <p>{{error}}</p>
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{% url 'view_request' %} " class="btn btn-primary" role="button">Cancel</a>
+                            <a href="#" class="btn btn-primary" role="button">Cancel</a>
                         </div>
                     </form>
 
