@@ -180,9 +180,13 @@ td {
                                     <!--<td>
                                         {% if "admin" in user_group %}
                                         <button type="button" class="btn btn-success btn-sm" title="Reject">
-                                        <a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
+                                        <a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}">
+                                        <i class="fas fa-tasks"></i></a>
+                                        </button>
                                         <button type="button" class="btn btn-success btn-sm" title="Complete">
-                                        <a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}"><i class="fas fa-tasks"></i></a></button>
+                                        <a style="text-decoration:none;color:#fff;" href="{% url 'completed_request' pk=i.request_id %}">
+                                        <i class="fas fa-tasks"></i></a>
+                                        </button>
                                         {% endif %}
                                     </td>-->
                                     {% endfor %}
