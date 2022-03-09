@@ -326,7 +326,9 @@ tbody {
                                     {% if data.0.procurement_approval == True and data.0.financial_approval == True and "User_Group_Project_Planner" in user_group %}
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" title="Edit Request">
-                                            <a style="text-decoration:none;color:#fff;" href="#"><i class="fas fa-edit"></i>&nbsp;Edit</a></button>
+                                            <a style="text-decoration:none;color:#fff;" href="#">
+                                            <i class="fas fa-edit"></i>&nbsp;Edit</a>
+                                        </button>
                                     </td>
                                     {% endif %}
                                 </tr>
