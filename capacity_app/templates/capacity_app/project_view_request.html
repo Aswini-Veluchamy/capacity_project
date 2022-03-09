@@ -327,7 +327,7 @@ tbody {
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" title="Edit Request">
                                             <a style="text-decoration:none;color:#fff;" href="#">
-                                            <i class="fas fa-edit"></i>&nbsp;Edit</a>
+                                                <i class="fas fa-edit"></i>&nbsp;Edit</a>
                                         </button>
                                     </td>
                                     {% endif %}
@@ -337,18 +337,18 @@ tbody {
                             <div class="mb-3 col-md-6">
                                 <table class="table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th>Milestone</th>
-                                        <th>Date</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Milestone</th>
+                                            <th>Date</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {% for i in mile_stone %}
-                                    <tr>
-                                        <td>{{i.name}}</td>
-                                        <td>{{i.date}}</td>
-                                        {% endfor %}
-                                    </tr>
+                                        {% for i in mile_stone %}
+                                        <tr>
+                                            <td>{{i.name}}</td>
+                                            <td>{{i.date}}</td>
+                                            {% endfor %}
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
