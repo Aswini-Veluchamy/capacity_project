@@ -202,7 +202,8 @@ def update_project_planner_request(request, pk):
                 remarks=data.remarks,
                 financial_approval=data.financial_approval,
                 procurement_approval=data.procurement_approval,
-                created_at=data.created_at
+                created_at=data.created_at,
+                request_id=data.request_id
             )
             history_data_create.save()  # saving the record in the table
 
@@ -344,7 +345,7 @@ def project_create_request(request):
         arbor = request.POST['arbor']
         gravit = request.POST['gravit']
         remarks = request.POST['remarks']
-
+        request_id = project_name[0:3] + "_" + str(int(time.time() * 1000))
         # creating the project plans
         query_data = ProjectPlannerData.objects.create(
             data_center=data_center,
@@ -361,7 +362,8 @@ def project_create_request(request):
             gravit=gravit,
             remarks=remarks,
             financial_approval=False,
-            procurement_approval=False
+            procurement_approval=False,
+            request_id=request_id
         )
         query_data.save()
 
@@ -423,7 +425,7 @@ def financial_approval(request):
 def completed_financial_approval(request, pk):
 
     """ storing approved record in table"""
-    data = ProjectPlannerData.objects.get(pk=pk)
+    data = ProjectPlannerData.objects.get(request_id=str(pk))
 
     create_record = FinanceProcurementApprovalData.objects.create(
         data_center=data.data_center,
@@ -439,12 +441,13 @@ def completed_financial_approval(request, pk):
         arbor=data.arbor,
         gravit=data.gravit,
         remarks=data.remarks,
-        user_name=data.user_name
+        user_name=data.user_name,
+        request_id=data.request_id
     )
     create_record.save()
 
     """ updating the new vales in table """
-    ProjectPlannerData.objects.filter(pk=pk).update(financial_approval=True)
+    ProjectPlannerData.objects.filter(request_id=str(pk)).update(financial_approval=True)
 
     return HttpResponseRedirect(reverse("financial_completed_request"))
 
@@ -465,7 +468,7 @@ def procurement_approval(request):
 
 @login_required
 def completed_procurement_approval(request, pk):
-    data = ProjectPlannerData.objects.get(pk=pk)
+    data = ProjectPlannerData.objects.get(request_id=str(pk))
 
     """ storing approved record in table"""
 
@@ -483,12 +486,13 @@ def completed_procurement_approval(request, pk):
         arbor=data.arbor,
         gravit=data.gravit,
         remarks=data.remarks,
-        user_name=data.user_name
+        user_name=data.user_name,
+        request_id=data.request_id
     )
     create_record.save()
 
     """ updating the new vales in table """
-    ProjectPlannerData.objects.filter(pk=pk).update(procurement_approval=True)
+    ProjectPlannerData.objects.filter(request_id=str(pk)).update(procurement_approval=True)
 
     return HttpResponseRedirect(reverse("procurement_completed_request"))
 

@@ -121,7 +121,7 @@ td {
                                 <tbody>
                                 {% for i in data %}
                                 <tr>
-                                    <td nowrap class="id">{{i.id}}</td>
+                                    <td nowrap class="id">{{i.request_id}}</td>
                                     <td nowrap class="dc">{{i.data_center}}</td>
                                     <td nowrap class="project_name">{{i.project_name}}</td>
                                     <td nowrap class="user_id">{{i.user_name}}</td>
@@ -136,7 +136,7 @@ td {
                                     <td nowrap class="remarks">{{i.remarks}}</td>
                                     <!--<td nowrap class="milestone_name">{{i.date}}</td>-->
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" title="Approve Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_financial_approval' pk=i.id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
+                                        <button type="button" class="btn btn-primary btn-sm" title="Approve Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_financial_approval' pk=i.request_id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
                                     </td>
                                     {% endfor %}
                                 </tr>
