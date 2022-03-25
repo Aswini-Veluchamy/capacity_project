@@ -417,7 +417,8 @@ def project_view_request(request):
 def financial_approval(request):
     email = request.session["user_group"][3]
     query_set = ProjectPlannerData.objects.filter(financial_approval=False)
-    return render(request, 'capacity_app/financial_approval.html', {"email": email,
+    mile_stone_data = MilestoneData.objects.all()
+    return render(request, 'capacity_app/financial_approval.html', {"email": email,"mile_stone": mile_stone_data,
                                                                     "data": query_set})
 
 

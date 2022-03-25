@@ -67,8 +67,6 @@ td {
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
-
-
     <section class="section dashboard">
         <div class="row">
             <div class="col-lg-12">
@@ -114,7 +112,10 @@ td {
                                     <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                     <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
                                     <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
-                                    <!--<th nowrap class="milestone_name" data-field="milestone_name" data-sortable="true">{{i.milestone_name}}</th>-->
+                                    {% for i in mile_stone %}
+                                    <th>Milestone</th>
+                                    <th>Milestone Date</th>
+                                    {% endfor %}
                                     <th nowrap class="action" data-sortable="true">Action</th>
                                 </tr>
                                 </thead>
@@ -134,7 +135,10 @@ td {
                                     <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
                                     <td nowrap class="updated_at">{{i.created_at|date:'Y-m-d H:i:s'}}</td>
                                     <td nowrap class="remarks">{{i.remarks}}</td>
-                                    <!--<td nowrap class="milestone_name">{{i.date}}</td>-->
+                                    {% for i in mile_stone %}
+                                    <td>{{i.name}}</td>
+                                    <td>{{i.date}}</td>
+                                    {% endfor %}
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" title="Approve Request"><a style="text-decoration:none;color:#fff;" href="{% url 'completed_financial_approval' pk=i.request_id %}"><i class="fas fa-check"></i>&nbsp;Approve</a></button>
                                     </td>
