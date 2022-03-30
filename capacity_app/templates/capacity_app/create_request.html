@@ -204,6 +204,10 @@ input[type="text"] {
                 </div>
             </div>
         </div>
+        {% if messages %}
+         <script>alert("{{ messages }}")</script>
+
+    {% endif %}
     </section>
 </main>
 <script src="{% static 'capacity_app/table_extensions/vendor/jquery/jquery-3.3.1.min.js' %}"></script>

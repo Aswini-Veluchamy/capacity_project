@@ -72,6 +72,7 @@ td {
                         <font size="2" face = "futura,helvetica">
                             <table class="table table-bordered table-striped" id="example"
                                    data-toggle="table"
+                                   data-card-view="true"
                                    data-pagination="true"
                                    data-search="true"
                                    data-show-columns="false"
@@ -89,7 +90,7 @@ td {
                                    data-pagination-next-text="Next"
                                    data-pagination-h-align="left"
                                    data-pagination-detail-h-align="right"
-                                   data-page-size="10"
+                                   data-page-size="1"
                                    data-page-list="[20, 30, 40, 50, All]"
                                    data-buttons-class="primary">
                                 <thead>
@@ -107,7 +108,10 @@ td {
                                     <th nowrap class="gravit" data-field="gravit" data-sortable="true" > Gravit (TB)</th>
                                     <th nowrap class="updated_at" data-field="updated_at" data-sortable="true" >Updated Date</th>
                                     <th nowrap class="remarks" data-field="remarks" data-sortable="true" >Remarks</th>
-                                    <!--<th nowrap class="milestone_name" data-field="milestone_name" data-sortable="true">{{i.milestone_name}}</th>-->
+                                    {% for i in mile_stone %}
+                                    <th>Milestone</th>
+                                    <th>Milestone Date</th>
+                                    {% endfor %}
                                     <th nowrap class="action" data-sortable="true" data-formatter="priceFormatter">Status</th>
                                 </tr>
                                 </thead>
@@ -127,7 +131,10 @@ td {
                                     <td nowrap class="gravit">{{i.gravit|floatformat}}</td>
                                     <td nowrap class="updated_at">{{i.approved_at|date:'Y-m-d H:i:s'}}</td>
                                     <td nowrap class="remarks">{{i.remarks}}</td>
-                                    <!--<td nowrap class="milestone_name">{{i.date}}</td>-->
+                                    {% for i in mile_stone %}
+                                    <td>{{i.name}}</td>
+                                    <td>{{i.date}}</td>
+                                    {% endfor %}
                                     <td nowrap class="action">Completed</td>
                                     {% endfor %}
                                 </tr>
